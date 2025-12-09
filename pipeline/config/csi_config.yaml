@@ -1,0 +1,47 @@
+# Garbage segmentation model configuration
+garbage_model:
+  class_ids: [ 0, 1, 2 ]  # Class indices for garbage segmentation
+  n_classes: 3  # Total number of classes
+  class_labels:
+    - "background"  # Class 0
+    - "foliage"     # Class 1
+    - "waste"       # Class 2
+
+# Road segmentation model configuration
+road_model:
+  class_ids: [ 0, 1 ]  # Class indices for road segmentation
+  n_classes: 2  # Total number of classes
+  class_labels:
+    - "background"  # Class 0
+    - "road"        # Class 1
+
+# Data preprocessing parameters
+resize_h: 416  # Height to resize images to
+resize_w: 608  # Width to resize images to
+
+# Data loading parameters
+img_h: 1080  # Original image height
+img_w: 1920  # Original image width
+img_ch: 3 # Original number of image channels
+
+# CSI (Cleanliness Score Index) parameters
+n_bins: 48 # Number of bins for the linearly spaced pattern
+linsp_start: 0.7 # Starting value for linear spacing in the pattern
+linsp_stop: 1.0 # Stopping value for linear spacing in the pattern
+percentage_dirty_road: 0.5  # Threshold to classify road as dirty
+garbage_type_coefficients: [ .6, .7 ]  # Importance weights for foliage and waste
+smooth: 2.0e-22 # Smooth parameter to prevent zero division errors during CSI calculation
+clip_csi: False # Flag to enable final csi clipping in [0, 1]
+debug: False # Flag to enable debug mode
+
+# Trapezoid ROI for front CSI calculation
+tp_front_top_left: [ 298, 818 ]   # top-left corner
+tp_front_top_right: [ 1576, 818 ]   # top-right corner
+tp_front_bottom_right: [ 1732, 1017 ]  # bottom-right corner
+tp_front_bottom_left: [ 129, 1017 ]    # bottom-left corner
+
+# Trapezoid ROI for rear CSI calculation
+tp_rear_top_left: [ 320, 702 ]   # top-left corner
+tp_rear_top_right: [ 1704, 702 ]   # top-right corner
+tp_rear_bottom_right: [ 1890, 1020 ]  # bottom-right corner
+tp_rear_bottom_left: [ 166, 1020 ]    # bottom-left corner

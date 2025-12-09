@@ -1,0 +1,187 @@
+---
+# Data logging settings
+
+logging_settings:
+   - logging_mode: 2                               # a boolean variable - 0 means logging is off; 1 means logging is in minimal mode; 2 means logging is in full mode.
+   - max_log_duration: 1200                # the maximum video reconding and CAN logging duration in seconds.
+   - logged_data_dir: /mnt/syslogic_sd_card/upload/ # the full path to the folder in which the videos and CAN log files are saved.
+   - overwrite_first_log: 0                        # !!!! NOT implemented yet. Should overwrite the first logs to create space for the new logs when the SD card gets full.
+
+camera_info:
+   - front:
+      #- path: /dev/video3
+      - id: 43-0021
+   - back:
+      #- path: /dev/video1
+      - id: 23-0021
+   - right_nozzle:
+      #- path: /dev/video2
+      - id: 33-0021
+   - left_nozzle:
+      #- path: /dev/video0
+      - id: 13-0021
+   - camera_type: D3
+
+
+device_info:
+   - device_name: syslogic_
+
+
+vehicle_info:
+   - serial_number: SN217841
+   - vehicle_type: V65
+   
+
+# A list of all signals being logged. 
+signal_settings:
+
+   can_signals:
+      - "time"
+      - "avifileindex"
+      - "Longitude"
+      - "Latitude"
+      - "Altitude"
+      - "ActiveSatellites"
+      - "Heading"
+      #- "Nozzle1downTMSCS"
+      - "Nozzle1"
+      #- "Nozzle2downTMS"
+      - "Nozzle2"
+      #- "SideBrush1downTMS"
+      - "SideBrush1"
+      #- "SideBrush2downTMS"
+      - "SideBrush2"
+      - "BrushCurrent"
+      #- "SideBrush1ExtendTMSCS"
+      - "SideBrush1Extension" 
+      #- "SideBrush2ExtendTMSCS"
+      - "SideBrush2Extension"
+      #- "SideBrush1RetractTMSCS"
+      - "SideBrush1Retraction"
+      #- "SideBrush2RetractTMSCS"
+      - "SideBrush2Retraction"
+      #- "Nozzle1WaterSprayOnOffTMS"
+      - "Nozzle1WaterSpray"
+      #- "Nozzle2WaterSprayOnOffTMS"
+      - "Nozzle2WaterSpray"
+      #- "SideBrush1WaterSprayTMS"
+      - "SideBrush1WaterSpray"
+      #- "SideBrush2WaterSprayTMS"
+      - "SideBrush2WaterSpray"
+      #- "WSBMotoronoffTMS"
+      #- "FanSpeed"
+      - "Engine_or_FanSpeed"
+      #- "FanOnTMS"
+      - "SuctionFan"
+      #- "WorkLight1OnOffTMS"
+      - "WorkLight1"
+      #- "WorkLight2OnOffTMS"
+      - "WorkLight2"
+      #- "NozGapOpen"
+      - "NozzleGapOpening"
+      #- "NozGapClose"
+      - "NozzleGapClosing"
+      #- "Pause_active"
+      - "Pause"
+      #- "AutoSweepActive"
+      - "SmartSweep"
+      #- "EngineType"
+      - "EngineType"
+      #- "EngineSpeed"
+      #- "RoadSpeedTMSCS"
+      - "FMSRoadSpeed"
+      #- "EngineFuelRateTMSCS"
+      - "Current_Ve_or_FuelRate_Vt"
+      #- "JVMheartbeat"
+      #- "JVMALerts"
+      #- "GutterSprayOnOff"
+      - "GutterSpray"
+      #- "AddWaterSprayOnOff"
+      - "AdditionalWaterSpray"
+      #- "WaterRe_circOnOff"
+      - "WaterRecirculation"
+      - "overidden"
+      - "Pressure1"
+      - "LifetimeFuelConsumption"
+      #- "DC_Bus_Voltage"
+      #- "MeasuredCapacitorVolts"
+      #- "DC_Bus_Current"
+      #- "Fan_BaseTorquue"
+      #- "Command_Hi"
+      #- "Fan_BaseSpeed"
+      #- "Fan_rpm"
+      #- "Motor_Angle"
+      #- "Motor_Frequency"
+      #- "Delta_Resolver_Filtered"
+      #- "Commanded_Torque"
+      #- "Torque_Feedback"
+      #- "Temp_To_Cutback"
+      #- "MeasuredMotorTemp"
+      #- "Hy_TorqueDemand"
+      #- "Hy_ControlWord"
+      #- "Hy_torqueLimit"
+      #- "MeasuredTorque_Raw"
+      #- "MeasuredSpeed_Raw"
+      #- "BatteryCurrent_Raw"
+      #- "maxExternalCurrent"
+      #- "externalHvState"
+      #- "vmuCounter"
+      #- "UnlockrequestReceived"
+      #- "Skid_Precharge_Engaged"
+      #- "Skid_Main_Engaged"
+      #- "Skid_Shed_Load"
+      #- "externalHvEnabled"
+      #- "vmuCounterResponse"
+      #- "JS_SystemCurrent"
+      #- "ChargeUnlockReq"
+      #- "Skid_System_Voltage"
+      #- "Shed_Load_Complete"
+      #- "CellTempLowest"
+      #- "CellTempHighest"
+      #- "CellTempAverage"
+      #- "SOC"
+      #- "dischargeLimitCurrent"
+      #- "batteryCurrent"
+      #- "batteryVoltage"
+      #- "regenerativeLimitCurrent"
+
+   camera_signals:
+      - "time"
+      - "background"
+      - "action_object"
+      - "check_nozzle"
+      - "nozzle_blocked"
+      - "nozzle_clear"
+      - "gravel"
+      - "confidence"
+      - "sm_current_state"
+
+   pm_signals:
+      - "time"
+      - "sensor_id"
+      - "SG_PM1_ug_per_m3_10s"
+      - "SG_PM2_5_ug_per_m3_10s"
+      - "SG_PM10_ug_per_m3_10s"
+      - "SG_Sleep_Mode"
+      - "SG_Degraded_mode"
+      - "SG_Not_Ready"
+      - "SG_Heater_Error"
+      - "SG_Temp_Humidity_Error"
+      - "SG_Fan_Error"
+      - "SG_Memory_Error"
+      - "SG_Laser_Error"
+      - "SG_FaultMode"
+      - "sensor_weighted_score"
+      - "dustometer"
+
+   csi_signals:
+      - "time"
+      - "discrete_csi_front"
+      - "absolute_csi_front"
+      - "relative_csi_front"
+      - "discrete_csi_rear"
+      - "absolute_csi_rear"
+      - "relative_csi_rear"
+      - "left_percentage"
+      - "centre_percentage"
+      - "right_percentage"

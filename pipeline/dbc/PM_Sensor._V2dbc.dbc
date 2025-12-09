@@ -1,0 +1,143 @@
+VERSION ""
+
+
+NS_ :
+  CM_
+  BA_DEF_
+  BA_
+  VAL_
+  BA_DEF_DEF_
+  SIG_VALTYPE_
+
+BS_:
+
+BU_: Vector__XXX
+
+BO_ 448 PM_SENSOR_00: 8 Vector__XXX
+SG_ SG_Sleep_Mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Degraded_mode : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Not_Ready : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Heater_Error : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Temp_Humidity_Error : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Fan_Error : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Memory_Error : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Laser_Error : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_PM1_ug_per_m3_10s : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM2_5_ug_per_m3_10s : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM10_ug_per_m3_10s : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_FaultMode : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 449 PM_SENSOR_01: 8 Vector__XXX
+SG_ SG_Sleep_Mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Degraded_mode : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Not_Ready : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Heater_Error : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Temp_Humidity_Error : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Fan_Error : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Memory_Error : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Laser_Error : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_PM1_ug_per_m3_10s : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM2_5_ug_per_m3_10s : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM10_ug_per_m3_10s : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_FaultMode : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 450 PM_SENSOR_02: 8 Vector__XXX
+SG_ SG_Sleep_Mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Degraded_mode : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Not_Ready : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Heater_Error : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Temp_Humidity_Error : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Fan_Error : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Memory_Error : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Laser_Error : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_PM1_ug_per_m3_10s : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM2_5_ug_per_m3_10s : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM10_ug_per_m3_10s : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_FaultMode : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 451 PM_SENSOR_03: 8 Vector__XXX
+SG_ SG_Sleep_Mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Degraded_mode : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Not_Ready : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Heater_Error : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Temp_Humidity_Error : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Fan_Error : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Memory_Error : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Laser_Error : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_PM1_ug_per_m3_10s : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM2_5_ug_per_m3_10s : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM10_ug_per_m3_10s : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_FaultMode : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 452 PM_SENSOR_04: 8 Vector__XXX
+SG_ SG_Sleep_Mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Degraded_mode : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Not_Ready : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Heater_Error : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Temp_Humidity_Error : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Fan_Error : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Memory_Error : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Laser_Error : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_PM1_ug_per_m3_10s : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM2_5_ug_per_m3_10s : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM10_ug_per_m3_10s : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_FaultMode : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 453 PM_SENSOR_05: 8 Vector__XXX
+SG_ SG_Sleep_Mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Degraded_mode : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Not_Ready : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Heater_Error : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Temp_Humidity_Error : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Fan_Error : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Memory_Error : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_Laser_Error : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SG_PM1_ug_per_m3_10s : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM2_5_ug_per_m3_10s : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_PM10_ug_per_m3_10s : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SG_FaultMode : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1856 Heart_Beat_PM0: 1 Vector__XXX
+SG_ Heartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1857 Heart_Beat_PM1: 1 Vector__XXX
+SG_ Heartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1858 Heart_Beat_PM2: 1 Vector__XXX
+SG_ Heartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1859 Heart_Beat_PM3: 1 Vector__XXX
+SG_ Heartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1860 Heart_Beat_PM4: 1 Vector__XXX
+SG_ Heartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1861 Heart_Beat_PM5: 1 Vector__XXX
+SG_ Heartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+
+BA_ "BusType" "CAN";
+
+BA_ "GenMsgCycleTime" BO_ 448 500;
+BA_ "GenMsgCycleTime" BO_ 449 500;
+BA_ "GenMsgCycleTime" BO_ 450 500;
+BA_ "GenMsgCycleTime" BO_ 451 500;
+BA_ "GenMsgCycleTime" BO_ 452 500;
+BA_ "GenMsgCycleTime" BO_ 453 500;
+BA_ "GenMsgCycleTime" BO_ 1856 995;
+BA_ "GenMsgCycleTime" BO_ 1857 995;
+BA_ "GenMsgCycleTime" BO_ 1858 995;
+BA_ "GenMsgCycleTime" BO_ 1859 995;
+BA_ "GenMsgCycleTime" BO_ 1860 995;
+BA_ "GenMsgCycleTime" BO_ 1861 995;
+VAL_ 1856 Heartbeat 0 "Bootup" 5 "Operational" 127 "Pre-Operational" 255 "Stopped";
+VAL_ 1857 Heartbeat 0 "Bootup" 5 "Operational" 127 "Pre-Operational" 255 "Stopped";
+VAL_ 1858 Heartbeat 0 "Bootup" 5 "Operational" 127 "Pre-Operational" 255 "Stopped";
+VAL_ 1859 Heartbeat 0 "Bootup" 5 "Operational" 127 "Pre-Operational" 255 "Stopped";
+VAL_ 1860 Heartbeat 0 "Bootup" 5 "Operational" 127 "Pre-Operational" 255 "Stopped";
+VAL_ 1861 Heartbeat 0 "Bootup" 5 "Operational" 127 "Pre-Operational" 255 "Stopped";

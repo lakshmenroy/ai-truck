@@ -1,0 +1,34 @@
+[property]
+gpu-id = 0
+model-engine-file = /mnt/ssd/model_repository/nozzlenet-v2/V253/ssd_resnet18_epoch_060-nozzlenet-batch-size-1.plan
+labelfile-path = /mnt/ssd/csi_pipeline/models/nozzlenet-v2/V250/labels.txt
+parse-bbox-func-name = NvDsInferParseCustomNMSTLT
+custom-lib-path = /opt/nvidia/deepstream/deepstream/lib/libnvds_infercustomparser.so
+interval = 0
+gie-unique-id = 1
+tlt-model-key = tlt_encode
+net-scale-factor = 1.0
+network-type = 0
+num-detected-classes = 6
+uff-input-order = 0
+output-blob-names = NMS
+uff-input-blob-name = Input
+model-color-format = 1
+maintain-aspect-ratio = 0
+output-tensor-meta = 0
+network-mode = 2  # Integer values = 0: FP32, 1: INT8, 2: FP16
+force-implicit-batch-dim = 1
+batch-size = 1
+enable-dla = 1
+use-dla-core = 1
+input-tensor-from-meta = 0
+offsets = 121.26000213623047;120.0999984741211;114.0999984741211
+infer-dims = 3;480;480
+input-tensor-meta = 1 # this when using preprocessing elements otherwise there will be no inference shown as it expecets metadata from the preprocess plugins
+process-mode = 1
+crop-objects-to-roi-boundary = 0
+
+[class-attrs-all]
+topk = 8
+threshold = 0.5
+

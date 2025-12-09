@@ -1,0 +1,11 @@
+{
+    "blob_endpoint": "https://stingststgsaprod001.blob.core.windows.net/marcotest/",
+    "sas_token": "?sp=acw&st",
+    "prioritize_csv_count": "10",
+    "max_csv_count": "20",
+    "log_level": "info",
+    "csv_to_upload_dir": "/home/marco/installer/to_upload/csv",
+    "video_to_upload_dir": "/home/marco/installer/to_upload/video",
+    "csv_uploaded_dir": "/home/marco/installer/uploaded/csv",
+    "video_uploaded_dir": "/home/marco/installer/uploaded/video"
+}

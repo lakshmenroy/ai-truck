@@ -1,0 +1,20 @@
+[property]
+enable=1
+# sink pad name which data will be pass to src pad.
+active-pad=sink_0
+# default pts-tolerance is 60 ms.
+pts-tolerance=60000
+
+[user-configs]
+
+[group-0]
+# src-ids-model-<model unique ID>=<source ids>
+# mux all source if don't set it.
+
+#mux meta from source 0 (for model 1)
+#src-ids-model-1=0
+
+#mux meta from sources 0 and 1
+#src-ids-model-1=1
+#src-ids-model-2=2
+#src-ids-model-3=3

@@ -1,0 +1,112 @@
+{
+    "cameras": 
+    [
+        {   
+            "name": "primary_nozzle",
+            "position": "left",
+            "device_tree_node_id": "43-0021",
+            "gmsl_port": "8",
+            "sensor_mode": 3,
+            "vertical_flip": false,
+            "horizontal_flip": false,
+            "gainrange": "1.0 8.0",
+            "exposuretimerange": "20000 336980000",
+            "ispdigitalgainrange": "1 256",
+            "converter_compute_hw": 2,
+            "converter_src_crop": "default",
+            "converter_dst_crop": "default",
+            "converter_flip_method": 2,
+            "qos": false,
+            "do_log": true,
+            "do_infer": true
+
+
+
+        },
+
+        {
+            "name": "front",
+            "position": "front",
+            "device_tree_node_id": "13-0021",
+            "gmsl_port": "2",
+            "sensor_mode": 3,
+            "vertical_flip": false,
+            "horizontal_flip": false,
+            "gainrange": "1.0 8.0",
+            "exposuretimerange": "20000 336980000",
+            "ispdigitalgainrange": "1 256",
+            "converter_compute_hw": 2,
+            "converter_src_crop": "default",
+            "converter_dst_crop": "default",
+            "converter_flip_method": 0,
+            "qos": false,
+            "do_log": true,
+            "do_infer": true
+
+
+        },
+
+        {
+            "name": "secondary_nozzle",
+            "position": "right",
+            "device_tree_node_id": "23-0021",
+            "gmsl_port": "4",
+            "sensor_mode": 3,
+            "vertical_flip": false,
+            "horizontal_flip": false,
+            "gainrange": "1.0 8.0",
+            "exposuretimerange": "20000 336980000",
+            "ispdigitalgainrange": "1 256",
+            "converter_compute_hw": 2,
+            "converter_src_crop": "default",
+            "converter_dst_crop": "default",
+            "converter_flip_method": 2,
+            "qos": false,
+            "do_log": true,
+            "do_infer": false
+
+        },
+
+        {
+            "name": "rear",
+            "position": "rear",
+            "device_tree_node_id": "33-0021",
+            "gmsl_port": "6",
+            "sensor_mode": 3,
+            "vertical_flip": false,
+            "horizontal_flip": false,
+            "gainrange": "1.0 8.0",
+            "exposuretimerange": "20000 336980000",
+            "ispdigitalgainrange": "1 256",
+            "converter_compute_hw": 2,
+            "converter_src_crop": "default",
+            "converter_dst_crop": "default",
+            "converter_flip_method": 0,
+            "qos": false,
+            "do_log": true,
+            "do_infer": true
+        }
+
+    ],
+
+    "sinks": 
+    {
+        "drm": true,
+        "file": false,
+        "network": false
+    }, 
+    "socket_path": "/tmp/pipeline.sock",
+    "metadata_sources": "gps",
+    "logging_level": "debug",
+    "display_height": 1080,
+    "display_width": 1920,
+    "log_frame_height": 1080,
+    "log_frame_width": 1920,
+    "log_frame_rate": "not_configurable",
+    "enable_long_format_logging_output": false,
+    "test_frame_count": 1,
+    "perform_frame_capture_test": true,
+    "send_v4l2_ctl_settings": true,
+    "status_json_path": "/tmp/bucher_ai_camera_status_on_bucher-d3-camera-init_service_run_%Y%m%d%H%M.json",
+    "export_status_json": true
+}

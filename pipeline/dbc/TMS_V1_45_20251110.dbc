@@ -1,0 +1,703 @@
+VERSION ""
+
+
+NS_ :
+  CM_
+  BA_DEF_
+  BA_
+  VAL_
+  BA_DEF_DEF_
+  SIG_VALTYPE_
+
+BS_:
+
+BU_: Vector__XXX
+
+
+BO_ 515 CAN203h_TrackerMsg1: 8 Vector__XXX
+SG_ BrushCurrent : 0|16@1+ (1,0) [0|65535] "mA" Vector__XXX
+SG_ HydPumpTorque_Ve : 16|8@1+ (1,0) [0|255] "Nm" Vector__XXX
+SG_ HydPumpSpeed_Ve : 24|8@1+ (10,0) [0|2550] "rpm" Vector__XXX
+SG_ SideBrush1Motor : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush2Motor : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush1 : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush2 : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush1Extension : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush1Retraction : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush2Extension : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush2Retraction : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ WSBMotor : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Nozzle1 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Nozzle2 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Rear_Suction : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ NozzleGapOpening : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ NozzleGapClosing : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Pause : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartSweep : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SupawashPumpTorque_Ve : 32|8@1+ (1,0) [0|255] "Nm" Vector__XXX
+SG_ SupawashPumpSpeed_Ve : 40|8@1+ (10,0) [0|2550] "rpm" Vector__XXX
+
+BO_ 771 CAN303h_TrackerMsg2: 8 Vector__XXX
+SG_ FanTorque_Ve : 8|16@1+ (1,0) [0|65535] "Nm" Vector__XXX
+SG_ SuctionFan : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ HighPressureWaterPump : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush1WaterSpray : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SideBrush2WaterSpray : 42|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ WorkLight1 : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ WorkLight2 : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AddWorkLight1 : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AddWorkLight2 : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ ChassisBeacons : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ RearBeacons1 : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ RearBeacons2 : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AddRearBeacons1 : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AddRearBeacons2 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ WSBWaterSpray : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Nozzle1WaterSpray : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Nozzle2WaterSpray : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ EngineType : 2|6@1+ (1,0) [0|63] "" Vector__XXX
+SG_ GutterSpray : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AdditionalWaterSpray : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ WaterRecirculation : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ HandofSweep : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1027 CAN403h_TrackerMsg3: 8 Vector__XXX
+SG_ MachineType : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ RoadSpeed : 16|16@1+ (1,0) [0|65535] "km/h" Vector__XXX
+SG_ Engine_or_FanSpeed : 32|16@1+ (1,0) [0|65535] "rpm" Vector__XXX
+SG_ Current_Ve_or_FuelRate_Vt : 48|16@1+ (0.05,0) [0|2876.75] "A or l/hr" Vector__XXX
+SG_ DueServiceType : 5|3@1+ (1,0) [0|7] "" Vector__XXX
+
+BO_ 1283 CAN503h_TrackerMsg4: 8 Vector__XXX
+SG_ CAN503h_TrackerMsg4_Mux M : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+SG_ WorkModeSelected : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ HopperRaisedSensor : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ HopperDoorSensor : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ EngineCoolantLevelLow : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Engine_Fan_Gearbox_Hours m0 : 16|32@1+ (0.05,0) [0|214748364.75] "Hr" Vector__XXX
+SG_ TotalRearSuctionTime m1 : 16|32@1+ (1,0) [0|4294967295] "s" Vector__XXX
+SG_ Machine_Status_Ve m1 : 48|3@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartAssistPresent m1 : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DaysTillService m2 : 16|16@1- (1,0) [0|32767] "days" Vector__XXX
+SG_ BatteryInitialCapacity m2 : 32|16@1+ (0.1,0) [0|6553.5] "kWh" Vector__XXX
+SG_ Hopper_Size m2 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ BatteryCycleCount m3 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ BatteryStateofHealth m3 : 48|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+SG_ PLCVer4 m4 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PLCVer3 m4 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ PLCVer2 m4 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ PLCVer1 m4 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ HMIVer4 m5 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ HMIVer3 m5 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ HMIVer2 m5 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ HMIVer1 m5 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 516 CAN204h_TrackerErrorMsg1: 8 Vector__XXX
+SG_ CAN204h_TrackerErrorMsg1_Mux M : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+SG_ SystemLocker_or_PrimaryNodeError0 m0 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Hopper_or_TouchscreenNodeError0 m0 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PowapakNodeError0 m0 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ HW_gate_desat m0 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ HW_OverCurrent m0 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AccShorted m0 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AccOpen m0 : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ CurrentSensorLow m0 : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ CurrentSensorHigh m0 : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ ModuleTempLow m0 : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ ModuleTempHigh m0 : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SystemLocker_or_PrimaryNodeError1 m1 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Hopper_or_TouchscreenNodeError1 m1 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PowapakNodeError1 m1 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ CtrlPCBTempLow m1 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ CtrlPCBTempHigh m1 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GateDrivePCBTempLow m1 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GateDrivePCBTempHigh m1 : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sense5VVoltageLow m1 : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sense5VVoltageHigh m1 : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sense12VVoltageLow m1 : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sense12VVoltageHigh m1 : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SystemLocker_or_PrimaryNodeError2 m2 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Hopper_or_TouchscreenNodeError2 m2 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PowapakNodeError2 m2 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Sense2_5VVoltageLow m2 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sense2_5VVoltageHigh m2 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sense1_5VVoltageLow m2 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sense1_5VVoltageHigh m2 : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DCBusVoltageHigh m2 : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DCBusVoltageLow m2 : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PreChargeTimeOut m2 : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PreChargeVoltageFailure m2 : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SystemLocker_or_PrimaryNodeError3 m3 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Hopper_or_TouchscreenNodeError3 m3 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PowapakNodeError3 m3 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ EEPROMChecksumInvalid m3 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ EEPROMDataOutofRange m3 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ EEPROMUpdateRequired m3 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ BrakeShorted m3 : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ BrakeOpen m3 : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SystemLocker_or_PrimaryNodeError4 m4 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Hopper_or_TouchscreenNodeError4 m4 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PowapakNodeError4 m4 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ MotorOverspeed m4 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Overcurrent m4 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ OverVoltage m4 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ InverterOverTemperature m4 : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AccInputShorted m4 : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DirectionCommandFault m4 : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ InverterResponseTimeout m4 : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AccInputOpen m4 : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SystemLocker_or_PrimaryNodeError5 m5 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Hopper_or_TouchscreenNodeError5 m5 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PowapakNodeError5 m5 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ HWOvercurrentFault m5 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ UnderVoltageFault m5 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ CANCommandMessageLost m5 : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ MotorOverTemperature m5 : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ HWGateDesaturation m5 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SystemLocker_or_PrimaryNodeError6 m6 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Hopper_or_TouchscreenNodeError6 m6 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PowapakNodeError6 m6 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ BrakeInputOpen m6 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ ModuleAOverTemperature m6 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ ModuleBOverTemperature m6 : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ ModuleCOverTemperature m6 : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PCBOverTemperature m6 : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GateBd1OverTemperature m6 : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GateBd2OverTemperature m6 : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ BrakeInputShorted m6 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SystemLocker_or_PrimaryNodeError7 m7 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Hopper_or_TouchscreenNodeError7 m7 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ PowapakNodeError7 m7 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ CurrentSensorFault m7 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ ResolverNotConnected m7 : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ InverterDischargeActive m7 : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GateBd3OverTemperature m7 : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PowaWashNodeErrors m8 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Bus m16 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+SG_ NodeID m16 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ ErrorCode m16 : 16|24@1+ (1,0) [0|16777215] "" Vector__XXX
+SG_ FMI m16 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ Occ m16 : 4|4@1+ (1,0) [0|15] "" Vector__XXX
+SG_ ErrorIndex m16 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 772 CAN304h_TrackerErrorMsg2: 8 Vector__XXX
+SG_ AuxEngFMI_Vt_SWPumpCodeLO_Ve : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ BMS2Error_Ve_AuxEngSPNLO_Vt : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ SWPumpCodeHi_Ve : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ BMS1_Error_Ve : 0|16@1+ (1,0) [0|1] "" Vector__XXX
+SG_ HydInvError_Ve_AuxEngSPNHi_Vt : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 1028 CAN404h_TrackerErrorMsg3: 8 Vector__XXX
+SG_ ProtectLamp : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ AmberWarningLamp : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ RedStopLamp : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ MIL : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ FlashProtectLamp : 8|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ FlashAmberWarningLamp : 10|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ FlashRedStopLamp : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ FlashMIL : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ AdBlueSPN_Vt_Odometer_Vh : 16|32@1+ (1,0) [0|4294967295] "m" Vector__XXX
+SG_ AdBlueFMI_Vt_Isolation_Ve : 48|16@1+ (1,0) [0|65535] "kOhm" Vector__XXX
+
+BO_ 1284 CAN504h_TrackerErrorMsg4: 8 Vector__XXX
+SG_ JVMALerts : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ HydPumpHours_Ve : 16|24@1+ (0.05,0) [0|838860.75] "h" Vector__XXX
+SG_ SupawashPumpHours_Ve : 40|24@1+ (0.05,0) [0|838860.75] "h" Vector__XXX
+
+BO_ 517 CAN205h_TrackerMsg5: 8 Vector__XXX
+SG_ AuxTankFuelLevel_Vh_SoCx2_Ve : 0|8@1+ (0.5,0) [0|127.5] "%" Vector__XXX
+SG_ ThrottlePedalPosition_Vh : 8|8@1+ (1,0) [0|100] "%" Vector__XXX
+SG_ HoursuntilNextService : 16|16@1- (1,0) [-32768|32767] "Hours" Vector__XXX
+SG_ SoftwarePack : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ EQNumber_H : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ EQNumber_L : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ EQNumber_M : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 773 CAN305h_TrackerMsg6: 8 Vector__XXX
+SG_ TotalSweptHours : 0|32@1+ (1,0) [0|4294967295] "S" Vector__XXX
+SG_ TotalAux_Vt_Fan_Ve_Gearbox_VhHrs : 32|32@1+ (1,0) [0|4294967295] "S" Vector__XXX
+
+BO_ 1029 CAN405h_TrackerMsg7: 8 Vector__XXX
+SG_ TotalSweepDistance_JVM : 0|32@1+ (1,0) [0|4294967295] "metres" Vector__XXX
+SG_ TotalRoadDistance_JVM : 32|32@1+ (1,0) [0|4294967295] "metres" Vector__XXX
+
+BO_ 1285 CAN505h_TrackerMsg8: 8 Vector__XXX
+SG_ TotalFuel_Vt_TotalkWH_Ve : 0|32@1+ (0.05,0) [0|214748364.75] "l or kWh" Vector__XXX
+SG_ WaterTankLevel : 32|8@1+ (1,0) [0|127.5] "%" Vector__XXX
+SG_ FanSpeed : 40|16@1+ (1,0) [0|65535] "rpm" Vector__XXX
+SG_ FanDemand : 56|8@1+ (1,0) [0|120] "%" Vector__XXX
+
+BO_ 631 JCMtoSmartSweeper: 8 Vector__XXX
+SG_ External_Display : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Reboot_Active : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ log_active : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Infer_Active : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Network_Stream_Active : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartPickup_Overidden : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Restart_Inference_App : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sweeping_Active : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Sweeper_Degraded_Operation : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Left_Side_Has_Sweepgear : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Right_Side_Has_Sweepgear : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Primary_Side_Left : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ LifetimeFuelConsumption : 32|32@1+ (0.5,0) [0|2147483647.5] "l" Vector__XXX
+SG_ FanPowerLevel : 16|4@1+ (10,0) [0|150] "%" Vector__XXX
+SG_ PrivacyMode : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartSetup_Overidden : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartPickup_Active : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartSetupActive : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 386 CMSCondition: 5 Vector__XXX
+SG_ TrackerSerial : 0|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+SG_ DataConnection : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GPSLock : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ BodyCANConnected : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 387 ProemionCondition: 8 Vector__XXX
+SG_ Pr_serial : 0|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+SG_ DataConnection : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GPSLock : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ BodyCANConnected : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ MobileSignalQuality : 40|8@1+ (1,0) [0|1] "" Vector__XXX
+SG_ MobileAntennaStatus : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GPSAntennaStatus : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ FMSRoadSpeed : 48|16@1+ (0.00390625,0) [0|255.99609375] "km/h" Vector__XXX
+
+BO_ 643 Acc_Gyro_X: 8 Vector__XXX
+SG_ Acceleration_X : 0|32@1- (1,0) [-3.4E038|3.4E038] "g" Vector__XXX
+SG_ Gyroscope_X : 32|32@1- (1,0) [-3.4E038|3.4E038] "�/s" Vector__XXX
+
+BO_ 899 Acc_Gyro_Y: 8 Vector__XXX
+SG_ Acceleration_Y : 0|32@1- (1,0) [-3.4E038|3.4E038] "g" Vector__XXX
+SG_ Gyroscope_Y : 32|32@1- (1,0) [-3.4E038|3.4E038] "�/s" Vector__XXX
+
+BO_ 1155 Acc_Gyro_Z: 8 Vector__XXX
+SG_ Acceleration_Z : 0|32@1- (1,0) [-3.4E038|3.4E038] "g" Vector__XXX
+SG_ Gyroscope_Z : 32|32@1- (1,0) [-3.4E038|3.4E038] "�/s" Vector__XXX
+
+BO_ 388 ProemionDistance: 8 Vector__XXX
+SG_ TotalSweepDistance_Pro : 0|32@1+ (1,0) [0|4294967295] "metres" Vector__XXX
+SG_ TotalRoadDistance_Pro : 32|32@1+ (1,0) [0|4294967295] "metres" Vector__XXX
+
+BO_ 644 Altitude_Time: 8 Vector__XXX
+SG_ Altitude : 0|32@1- (1,0) [-3.4E038|3.4E038] "" Vector__XXX
+SG_ Device_Time : 32|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+
+BO_ 900 Longitude_Latitude: 8 Vector__XXX
+SG_ Longitude : 0|32@1- (1,0) [-180|180] "�" Vector__XXX
+SG_ Latitude : 32|32@1- (1,0) [-180|180] "�" Vector__XXX
+
+BO_ 1156 Pos_Accuracy: 8 Vector__XXX
+SG_ Horizontal_Accuracy : 0|32@1+ (1,0) [0|4294967295] "mm" Vector__XXX
+SG_ Vertical_Accuracy : 32|32@1+ (1,0) [0|4294967295] "mm" Vector__XXX
+
+BO_ 389 ProemionSetDistance: 8 Vector__XXX
+SG_ Set_TotalSweepDistance : 0|32@1+ (1,0) [0|4294967295] "metres" Vector__XXX
+SG_ Set_TotalRoadDistance : 32|32@1+ (1,0) [0|4294967295] "metres" Vector__XXX
+
+BO_ 645 Satellites_Heading: 8 Vector__XXX
+SG_ ActiveSatellites : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ Heading : 8|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+SG_ Config_3 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ Config_2 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ Config_1 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 901 VehicleSpeed: 8 Vector__XXX
+SG_ TruckRoadSpeed : 0|32@1- (1,0) [0|200] "km/h" Vector__XXX
+SG_ ConfigMajor : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ ConfigMinor : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ ConfigRevision : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 503 SmartSweeperECUtoJCM: 8 Vector__XXX
+SG_ Front_Camera_Init_State : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Rear_Camera_Init_State : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Secondary_Camera_Init_State : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Primary_Camera_Init_State : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Front_Camera_Runtime_State : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Rear_Camera_Runtime_State : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Primary_Camera_Runtime_State : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Secondary_Camera_Runtime_State : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Primary_Nozzle_State : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ Secondary_Nozzle_State : 18|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ Fan_Request : 32|4@1+ (1,0) [0|12] "" Vector__XXX
+SG_ Nozzle_Clear : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Nozzle_Blocked : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Nozzle_Action_Object : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Nozzle_Gravel : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ WSB_State : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+SG_ DIWC_0 : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DIWC_1 : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DIWC_2 : 42|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DIWC_3 : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DIWC_4 : 44|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DIWC_5 : 45|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DIWC_6 : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DIWC_7 : 47|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ CSE : 48|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+SG_ Dustometer : 56|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+SG_ BlockedTooLong : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ OverSpeed : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Enhanced_Logging : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartPickupStatus : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartCSIStatus : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ SmartSetupStatus : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DustometerStatus : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+
+
+BO_ 1794 CMSStatus: 1 Vector__XXX
+SG_ TrackerHeartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1795 ProemionStatus: 1 Vector__XXX
+SG_ Heartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1812 JVMStatus: 1 Vector__XXX
+SG_ JVMheartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1911 SmartSweeperStatus: 1 Vector__XXX
+SG_ AI_Heartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1157 ProemionSetvalue: 8 Vector__XXX
+SG_ ProemionSetvalue_Mux M : 0|6@1+ (1,0) [0|0] "" Vector__XXX
+SG_ WriteEnable : 6|2@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Value m0 : 8|32@1- (1,0) [0|4294967295] "" Vector__XXX
+SG_ TotalConsumptionValuex2 m1 : 8|32@1+ (0.5,0) [0|214748364.75] "l or kWh" Vector__XXX
+
+BO_ 247 Syslogic_EMCY: 8 Vector__XXX
+SG_ Emcy_Code : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Generic_Error : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Current_Error : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Voltage_Error : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Temperature_Error : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Comms_Error_Overrun : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Device_Profile_Specific_Error : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Reserved : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ Manufacturer_Specific_Error : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ AI_Reported_Code : 24|16@1+ (1,0) [0|65535] "" Vector__XXX
+SG_ Reserved_2 : 40|24@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 759 SmartSweeperECU2toJCM_2: 8 Vector__XXX
+SG_ SmartPickupFramerate : 0|8@1+ (1,0) [0|255] "fps" Vector__XXX
+SG_ SmartCSIFramerate : 8|8@1+ (1,0) [0|255] "fps" Vector__XXX
+SG_ CSI_Front : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ CSI_Rear : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1015 SmartSweeperECU3toJCM: 8 Vector__XXX
+SG_ PM1HB : 14|2@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2HB : 25|2@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3HB : 36|2@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4HB : 47|2@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5HB : 58|2@1+ (1,0) [0|1] "" Vector__XXX
+SG_ RearFailureMode_Left : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ RearFailureMode_Mid : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ RearFailureMode_Right : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_degraded_mode : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0HB : 3|2@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_degraded_mode : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_degraded_mode : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_degraded_mode : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_FanError : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_FanError : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_FanError : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_FanError : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_FaultMode : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_FaultMode : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_FaultMode : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_FaultMode : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_degraded_mode : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_FanError : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_FaultMode : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_HeaterError : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_HeaterError : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_HeaterError : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_HeaterError : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_HeaterError : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_LaserError : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_LaserError : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_LaserError : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_LaserError : 42|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_LaserError : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_MemoryError : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_MemoryError : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_MemoryError : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_MemoryError : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_MemoryError : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_NotReady : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_NotReady : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_NotReady : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_NotReady : 44|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_NotReady : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_SleepMode : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_SleepMode : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_SleepMode : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_SleepMode : 45|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_SleepMode : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM0_TempHumidityError : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM1_TempHumidityError : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM2_TempHumidityError : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM3_TempHumidityError : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM4_TempHumidityError : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5_degraded_mode : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5_FanError : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5_FaultMode : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5_HeaterError : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1271 SmartSweeperECU4toJCM: 1 Vector__XXX
+SG_ PM5_LaserError : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5_MemoryError : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5_NotReady : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5_SleepMode : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+SG_ PM5_TempHumidityError : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+
+CM_ SG_ 771 HandofSweep "Valid from sw 'R' (legacy) sw 'B' (Dev)";
+CM_ SG_ 1027 Current_Ve_or_FuelRate_Vt "Apply an offset of -400 if Current or offset of 0 if liquid fuel";
+CM_ SG_ 1283 SmartAssistPresent "State of JCM smart assist installed configuration Parameter";
+CM_ SG_ 1283 Hopper_Size "Valid values of 50,65,80 and 120 - subject to expansion";
+CM_ SG_ 1283 BatteryStateofHealth "value 255 = unavailable";
+CM_ SG_ 516 SystemLocker_or_PrimaryNodeError0 "If machine type (in 403h) < 32 then systemlocker  else primary";
+CM_ SG_ 516 Hopper_or_TouchscreenNodeError0 "If machine type (in 403h) < 32 then Hopper  else Touchscreen";
+CM_ SG_ 516 SystemLocker_or_PrimaryNodeError1 "If machine type (in 403h) < 32 then systemlocker  else primary";
+CM_ SG_ 516 Hopper_or_TouchscreenNodeError1 "If machine type (in 403h) < 32 then Hopper  else Touchscreen";
+CM_ SG_ 516 SystemLocker_or_PrimaryNodeError2 "If machine type (in 403h) < 32 then systemlocker  else primary";
+CM_ SG_ 516 Hopper_or_TouchscreenNodeError2 "If machine type (in 403h) < 32 then Hopper  else Touchscreen";
+CM_ SG_ 516 SystemLocker_or_PrimaryNodeError3 "If machine type (in 403h) < 32 then systemlocker  else primary";
+CM_ SG_ 516 Hopper_or_TouchscreenNodeError3 "If machine type (in 403h) < 32 then Hopper  else Touchscreen";
+CM_ SG_ 516 SystemLocker_or_PrimaryNodeError4 "If machine type (in 403h) < 32 then systemlocker  else primary";
+CM_ SG_ 516 Hopper_or_TouchscreenNodeError4 "If machine type (in 403h) < 32 then Hopper  else Touchscreen";
+CM_ SG_ 516 SystemLocker_or_PrimaryNodeError5 "If machine type (in 403h) < 32 then systemlocker  else primary";
+CM_ SG_ 516 Hopper_or_TouchscreenNodeError5 "If machine type (in 403h) < 32 then Hopper  else Touchscreen";
+CM_ SG_ 516 SystemLocker_or_PrimaryNodeError6 "If machine type (in 403h) < 32 then systemlocker  else primary";
+CM_ SG_ 516 Hopper_or_TouchscreenNodeError6 "If machine type (in 403h) < 32 then Hopper  else Touchscreen";
+CM_ SG_ 516 SystemLocker_or_PrimaryNodeError7 "If machine type (in 403h) < 32 then systemlocker  else primary";
+CM_ SG_ 516 Hopper_or_TouchscreenNodeError7 "If machine type (in 403h) < 32 then Hopper  else Touchscreen";
+CM_ SG_ 516 Occ "Number of occurrences that this error has occurred this ignition cycle (May overflow)";
+CM_ BO_ 1285 "Before V65 RevQ TotalKWH had a factor of 1";
+CM_ SG_ 1285 FanDemand "Operator/smartsweep requested fan demand level 0-100 standard or 0-120 with boost";
+CM_ SG_ 631 External_Display "Extended scope  - Not yet Implemented, Confirmation that an external display for the AI ECU is present on the vehicle";
+CM_ SG_ 631 Reboot_Active "Extended scope  - Not yet Implemented -JCM command to reboot the AI ECU";
+CM_ SG_ 631 Infer_Active "Confirmation that the JCM is acting on the requests from the AI ECU";
+CM_ SG_ 631 Network_Stream_Active "Extended scope  - Not yet Implemented - Enables or disables network stream output from the AI ECU";
+CM_ SG_ 631 SmartPickup_Overidden "Information to show that the JCM is ignoring SmartPickup due to operator intervention";
+CM_ SG_ 631 Restart_Inference_App "Extended scope  - Not yet Implemented -JVM command to reboot the AI application on the AI ECU";
+CM_ SG_ 631 Sweeping_Active "Information to show that sweeping is active";
+CM_ SG_ 631 Sweeper_Degraded_Operation "Flag for any error to do with sweeping functions of the vehicle";
+CM_ SG_ 631 Left_Side_Has_Sweepgear "Information as to whether sweepgear is mounted on the left side of the vehicle";
+CM_ SG_ 631 Right_Side_Has_Sweepgear "Information as to whether sweepgear is mounted on the right side of the vehicle";
+CM_ SG_ 631 Primary_Side_Left "Information as to if the left side of the vehicle is considered the primary side, if 0 right side is primary";
+CM_ SG_ 631 LifetimeFuelConsumption "Value of fuel consumed by the auxiliary engine in litres";
+CM_ SG_ 631 FanPowerLevel "Percentage value of the current fan power level";
+CM_ SG_ 631 PrivacyMode "Indication that the AI ECU should stop recording";
+CM_ SG_ 631 SmartSetup_Overidden "Information to show that the JCM is ignoring SmartSetup due to operator intervention";
+CM_ SG_ 631 SmartPickup_Active "Indication that the JCM is listening to the commands from SmartPickup";
+CM_ SG_ 631 SmartSetupActive "Indication that the JCM is listening to the commands from SmartSetup";
+CM_ BO_ 901 "Placeholder for later implementation";
+CM_ SG_ 503 Front_Camera_Init_State "Information as to whether the camera was present when the AI application started";
+CM_ SG_ 503 Rear_Camera_Init_State "Information as to whether the camera was present when the AI application started";
+CM_ SG_ 503 Secondary_Camera_Init_State "Information as to whether the camera was present when the AI application started";
+CM_ SG_ 503 Primary_Camera_Init_State "Information as to whether the camera was present when the AI application started";
+CM_ SG_ 503 Front_Camera_Runtime_State "Information as to whether the camera is present during the application runtime";
+CM_ SG_ 503 Rear_Camera_Runtime_State "Information as to whether the camera is present during the application runtime";
+CM_ SG_ 503 Primary_Camera_Runtime_State "Information as to whether the camera is present during the application runtime";
+CM_ SG_ 503 Secondary_Camera_Runtime_State "Information as to whether the camera is present during the application runtime";
+CM_ SG_ 503 Primary_Nozzle_State "Request for altering nozzle gap on primary nozzle";
+CM_ SG_ 503 Secondary_Nozzle_State "Request for altering nozzle gap on secondary nozzle";
+CM_ SG_ 503 Fan_Request "Request for setting vehicle fan speed";
+CM_ SG_ 503 WSB_State "Request for deploying/stowing wide sweep brush";
+CM_ SG_ 503 CSE "Percentage value of the efficiency of the SmartAssist functions";
+CM_ SG_ 503 Dustometer "Percentage value of the presence of dust in the vehicle area";
+CM_ SG_ 503 BlockedTooLong "Indication that the nozzle area has been blocked for a set time period and will require operator intervention";
+CM_ SG_ 503 OverSpeed "Indication that the SmartAssist functions will be degraded due to the speed of the vehicle";
+CM_ SG_ 503 Enhanced_Logging "Indication that the SmartAssist system will be capturing additional additional data from the vehicle";
+CM_ SG_ 503 AI_App_Status "Report of the status of the AI Application (0 � Inactive, 1 � Active): Bit 0 � SmartPickup, Bit 1 � SmartCSI, Bit 2 � SmartSetup, Bit 3 � Dustometer";
+CM_ SG_ 1157 Value "Addition with ver 1.43-changed to float with 1.44";
+CM_ SG_ 1157 TotalConsumptionValuex2 "Addition with ver 1.43.  Setting value to  0 will cancell the offset. For H2 engine, factor is 0.05kg/bit";
+
+BA_DEF_  "BusType" STRING ;
+
+BA_DEF_DEF_  "BusType" "CAN";
+
+BA_ "BusType" "CAN";
+
+VAL_ 1283 CAN503h_TrackerMsg4_Mux 0 "Mux0" 1 "Mux1" 2 "Mux2" 3 "Mux3" 4 "Mux4" 5 "Mux5";
+VAL_ 516 CAN204h_TrackerErrorMsg1_Mux 0 "POST_0" 1 "POST_1" 2 "POST_2" 3 "POST_3" 4 "RUN_1" 5 "RUN_2" 6 "RUN_3" 7 "RUN_4" 8 "ExtendedErrors" 16 "FullFormatError";
+VAL_ 1157 ProemionSetvalue_Mux 0 "SetValue" 1 "TotalConsumptionSet";
+VAL_ 515 SideBrush1Motor 1 "On" 0 "Off";
+VAL_ 515 SideBrush2Motor 1 "On" 0 "Off";
+VAL_ 515 SideBrush1 0 "Up" 1 "Down";
+VAL_ 515 SideBrush2 0 "Up" 1 "Down";
+VAL_ 515 SideBrush1Extension 0 "Inactive" 1 "Active";
+VAL_ 515 SideBrush1Retraction 0 "Inactive" 1 "Active";
+VAL_ 515 SideBrush2Extension 0 "Inactive" 1 "Active";
+VAL_ 515 SideBrush2Retraction 0 "Inactive" 1 "Active";
+VAL_ 515 WSBMotor 1 "On" 0 "Off";
+VAL_ 515 Nozzle1 0 "Up" 1 "Down";
+VAL_ 515 Nozzle2 0 "Up" 1 "Down";
+VAL_ 515 Rear_Suction 0 "Inactive" 1 "Active";
+VAL_ 515 NozzleGapOpening 0 "Inactive" 1 "Active";
+VAL_ 515 NozzleGapClosing 0 "Inactive" 1 "Active";
+VAL_ 515 Pause 0 "Inactive" 1 "Active";
+VAL_ 515 SmartSweep 0 "Inactive" 1 "Active";
+VAL_ 771 SuctionFan 1 "On" 0 "Off";
+VAL_ 771 HighPressureWaterPump 1 "On" 0 "Off";
+VAL_ 771 SideBrush1WaterSpray 1 "On" 0 "Off";
+VAL_ 771 SideBrush2WaterSpray 1 "On" 0 "Off";
+VAL_ 771 WorkLight1 1 "On" 0 "Off";
+VAL_ 771 WorkLight2 1 "On" 0 "Off";
+VAL_ 771 AddWorkLight1 1 "On" 0 "Off";
+VAL_ 771 AddWorkLight2 1 "On" 0 "Off";
+VAL_ 771 ChassisBeacons 1 "On" 0 "Off";
+VAL_ 771 RearBeacons1 1 "On" 0 "Off";
+VAL_ 771 RearBeacons2 1 "On" 0 "Off";
+VAL_ 771 AddRearBeacons1 1 "On" 0 "Off";
+VAL_ 771 AddRearBeacons2 1 "On" 0 "Off";
+VAL_ 771 WSBWaterSpray 1 "On" 0 "Off";
+VAL_ 771 Nozzle1WaterSpray 1 "On" 0 "Off";
+VAL_ 771 Nozzle2WaterSpray 1 "On" 0 "Off";
+VAL_ 771 EngineType 0 "Twin JCB 93kW" 1 "Twin JCB 85kW" 2 "Twin JCB 55kW" 3 "Twin JD 86kW" 4 "Hydrostatic HGB2" 5 "Mekavac" 6 "Hydrostatic" 7 "Twin JCB 93kW Tier4" 8 "EV 130kW" 9 "Twin JCB 55kW S5" 10 "Twin JCB 97kW" 11 "Omsi 400" 12 "Omsi 600" 13 "EV 150kW" 14 "Twin Cummins 82kW" 15 "Twin JCB 129kW" 16 "Mekavac - Allison Chelsea" 17 "Hydrostatic HGB3" 18 "Omsi 600 Tri-Plate" 19 "Twin JCB 55kW Hydrogen";
+VAL_ 771 GutterSpray 1 "On" 0 "Off";
+VAL_ 771 AdditionalWaterSpray 1 "On" 0 "Off";
+VAL_ 771 WaterRecirculation 1 "On" 0 "Off";
+VAL_ 771 HandofSweep 0 "Left" 1 "Right";
+VAL_ 1027 MachineType 1 "Vh_Hydrostatic" 3 "Vt_Twin" 5 "Vm_Mekavac" 8 "Ve_Electric" 29 "Ve_Emoss_Gen2" 32 "Vh_VSeries" 34 "Vt_VSeries" 36 "Vm_VSeries" 39 "Ve_VSeries" 2 "C201" 4 "C401" 16 "CC5006" 17 "CF/OF Hydrostatic (VFS)" 18 "CF/OF Twin Engine (VFT)" 19 "CF/OF Semi-Hydrostatic (VFM)" 10 "PodSweeper" 6 "RT_Regen twin" 7 "RM_Regen Semi-Hydrostatic";
+VAL_ 1027 DueServiceType 0 "No Service Requested" 1 "Initial service required" 2 "'A' Service Requested" 3 "'B' Service Requested" 4 "'C' Service Requested" 5 "'D' Service Requested" 6 "";
+VAL_ 1283 Machine_Status_Ve 0 "Unavailable" 1 "Drive" 2 "Charge" 3 "Error" 4 "not defined";
+VAL_ 1283 SmartAssistPresent 5 "Operational" 4 "Stopped" 127 "Preoperational" 0 "Bootup" 255 "Offline";
+VAL_ 1028 ProtectLamp 0 "Off" 1 "On" 2 "Reserved" 3 "Reserved/Unavailable";
+VAL_ 1028 AmberWarningLamp 0 "Off" 1 "On" 2 "Reserved" 3 "Reserved/Unavailable";
+VAL_ 1028 RedStopLamp 0 "Off" 1 "On" 2 "Reserved" 3 "Reserved/Unavailable";
+VAL_ 1028 MIL 0 "Off" 1 "On" 2 "Reserved" 3 "Reserved/Unavailable";
+VAL_ 1028 FlashProtectLamp 0 "Slow Flash(1Hz)" 1 "Fast Flash(2Hz)" 2 "Reserved" 3 "Unavailable/Do not flash";
+VAL_ 1028 FlashAmberWarningLamp 0 "Slow Flash(1Hz)" 1 "Fast Flash(2Hz)" 2 "Reserved" 3 "Unavailable/Do not flash";
+VAL_ 1028 FlashRedStopLamp 0 "Slow Flash(1Hz)" 1 "Fast Flash(2Hz)" 2 "Reserved" 3 "Unavailable/Do not flash";
+VAL_ 1028 FlashMIL 0 "Slow Flash(1Hz)" 1 "Fast Flash(2Hz)" 2 "Reserved" 3 "Unavailable/Do not flash";
+VAL_ 517 SoftwarePack 0 "Not Set" 1 "A" 2 "B" 3 "C" 4 "D" 5 "E" 6 "F" 7 "G" 8 "H" 9 "I" 10 "J" 11 "K" 12 "L" 13 "M" 14 "N" 15 "O" 16 "P" 17 "Q" 18 "R" 19 "S" 20 "T" 21 "U" 22 "V" 23 "W" 24 "X" 25 "Y" 26 "Z" 27 "AA" 28 "AB" 29 "AC" 30 "AD" 31 "AE" 32 "AF" 33 "AG" 34 "AH" 35 "AI" 36 "AJ" 37 "AK" 38 "AL" 39 "AM" 40 "AN" 41 "AO" 42 "AP" 43 "AQ" 44 "AR" 45 "AS" 46 "AT" 47 "AU" 48 "AV" 49 "AW" 50 "AX" 51 "AY" 52 "AZ" 254 "Development/Testing" 255 "Invalid";
+VAL_ 631 SmartPickup_Overidden 0 "Inactive" 1 "Active";
+VAL_ 631 PrivacyMode 0 "Off" 1 "On";
+VAL_ 631 SmartSetup_Overidden 0 "Inactive" 1 "Active";
+VAL_ 386 DataConnection 0 "False" 1 "True";
+VAL_ 386 GPSLock 0 "False" 1 "True";
+VAL_ 386 BodyCANConnected 0 "False" 1 "True";
+VAL_ 387 DataConnection 0 "False" 1 "True";
+VAL_ 387 GPSLock 0 "False" 1 "True";
+VAL_ 387 BodyCANConnected 0 "False" 1 "True";
+VAL_ 387 MobileSignalQuality 0 "-113dBm or less" 1 "-111dBm" 2 "-109dBm" 3 "-107dBm" 4 "-105dBm" 5 "-103dBm" 6 "-101dBm" 7 "-99dBm" 8 "-97dBm" 9 "-95dBm" 10 "-93dBm" 11 "-91dBm" 12 "-89dBm" 13 "-87dBm" 14 "-85dBm" 15 "-83dBm" 16 "-81dBm" 17 "-79dBm" 18 "-77dBm" 19 "-75dBm" 20 "-73dBm" 21 "-71dBm" 22 "-69dBm" 23 "-67dBm" 24 "-65dBm" 25 "-63dBm" 26 "-61dBm" 27 "-59dBm" 28 "-57dBm" 29 "-55dBm" 30 "-53dBm" 31 "-51 dBm or greater" 99 "Not known or not detectable" 100 "-116dBm or less" 101 "-115dBm" 102 "-114dBm" 103 "-113dBm" 104 "-112dBm" 105 "-111dBm" 106 "-110dBm" 107 "-109dBm" 108 "-108dBm" 109 "-107dBm" 110 "-106dBm" 111 "-105dBm" 112 "-104dBm" 113 "-103dBm" 114 "-102dBm" 115 "-101dBm" 116 "-100dBm" 117 "-99dBm" 118 "-98dBm" 119 "-97dBm" 120 "-96dBm" 121 "-95dBm" 122 "-94dBm" 123 "-93dBm" 124 "-92dBm" 125 "-91dBm" 126 "-90dBm" 127 "-89dBm" 128 "-88dBm" 129 "-87dBm" 130 "-86dBm" 131 "-85dBm" 132 "-84dBm" 133 "-83dBm" 134 "-82dBm" 135 "-81dBm" 136 "-80dBm" 137 "-79dBm" 138 "-78dBm" 139 "-77dBm" 140 "-76dBm" 141 "-75dBm" 142 "-74dBm" 143 "-73dBm" 
+144 "-72dBm" 145 "-71dBm" 146 "-70dBm" 147 "-69dBm" 148 "-68dBm" 149 "-67dBm" 150 "-66dBm" 151 "-65dBm" 152 "-64dBm" 153 "-63dBm" 154 "-62dBm" 155 "-61dBm" 156 "-60dBm" 157 "-59dBm" 158 "-58dBm" 159 "-57dBm" 160 "-56dBm" 161 "-55dBm" 162 "-54dBm" 163 "-53dBm" 164 "-52dBm" 165 "-51dBm" 166 "-50dBm" 167 "-49dBm" 168 "-48dBm" 169 "-47dBm" 170 "-46dBm" 171 "-45dBm" 172 "-44dBm" 173 "-43dBm" 174 "-42dBm" 175 "-41dBm" 176 "-40dBm" 177 "-39dBm" 178 "-38dBm" 179 "-37dBm" 180 "-36dBm" 181 "-35dBm" 182 "-34dBm" 183 "-33dBm" 184 "-32dBm" 185 "-31dBm" 186 "-30dBm" 187 "-29dBm" 188 "-28dBm" 189 "-27dBm" 190 "-26dBm" 191 "-25dBm or greater" 199 "Not known or not detectable";
+VAL_ 387 MobileAntennaStatus 0 "damaged or missing" 1 "OK";
+VAL_ 387 GPSAntennaStatus 0 "damaged or missing" 1 "OK";
+VAL_ 503 Front_Camera_Init_State 0 "OK" 1 "NOT_OK";
+VAL_ 503 Rear_Camera_Init_State 0 "OK" 1 "NOT_OK";
+VAL_ 503 Secondary_Camera_Init_State 0 "OK" 1 "NOT_OK";
+VAL_ 503 Primary_Camera_Init_State 0 "OK" 1 "NOT_OK";
+VAL_ 503 Front_Camera_Runtime_State 0 "OK" 1 "NOT_OK";
+VAL_ 503 Rear_Camera_Runtime_State 0 "OK" 1 "NOT_OK";
+VAL_ 503 Primary_Camera_Runtime_State 0 "OK" 1 "NOT_OK";
+VAL_ 503 Secondary_Camera_Runtime_State 0 "OK" 1 "NOT_OK";
+VAL_ 503 Primary_Nozzle_State 0 "Clear" 1 "Blocked" 2 "Error" 3 "Unknown";
+VAL_ 503 Secondary_Nozzle_State 0 "Clear" 1 "Blocked" 2 "Error" 3 "Unknown";
+VAL_ 503 Nozzle_Clear 0 "Off" 1 "On";
+VAL_ 503 Nozzle_Blocked 0 "Off" 1 "On";
+VAL_ 503 Nozzle_Action_Object 0 "Off" 1 "On";
+VAL_ 503 Nozzle_Gravel 0 "Off" 1 "On";
+VAL_ 503 WSB_State 0 "Stow" 1 "Deploy" 2 "Error" 3 "Unknown";
+VAL_ 503 DIWC_0 0 "Off" 1 "On";
+VAL_ 503 DIWC_1 0 "Off" 1 "On";
+VAL_ 503 DIWC_2 0 "Off" 1 "On";
+VAL_ 503 DIWC_3 0 "Off" 1 "On";
+VAL_ 503 DIWC_4 0 "Off" 1 "On";
+VAL_ 503 DIWC_5 0 "Off" 1 "On";
+VAL_ 503 DIWC_6 0 "Off" 1 "On";
+VAL_ 503 DIWC_7 0 "Off" 1 "On";
+VAL_ 503 BlockedTooLong 0 "Off" 1 "On";
+VAL_ 503 OverSpeed 0 "Off" 1 "On";
+VAL_ 503 SmartPickupStatus 0 "Inactive" 1 "Active";
+VAL_ 503 SmartCSIStatus 0 "Inactive" 1 "Active";
+VAL_ 503 SmartSetupStatus 0 "Inactive" 1 "Active";
+VAL_ 503 DustometerStatus 0 "Inactive" 1 "Active";
+VAL_ 1794 TrackerHeartbeat 5 "Operational" 4 "Stopped" 127 "Preoperational" 0 "Bootup" 255 "Offline";
+VAL_ 1795 Heartbeat 5 "Operational" 4 "Stopped" 127 "Preoperational" 0 "Bootup" 255 "Offline";
+VAL_ 1812 JVMheartbeat 5 "Operational" 4 "Stopped" 127 "Preoperational" 0 "Bootup" 255 "Offline";
+VAL_ 1911 AI_Heartbeat 5 "Operational" 4 "Stopped" 127 "Preoperational" 0 "Bootup" 255 "Offline";
+VAL_ 1157 WriteEnable 0 "Writing Disabled" 1 "Writing Enabled" 2 "Reserved" 3 "Reserved/Unavailable";
+VAL_ 247 Emcy_Code 0 "Error Reset/ No Error" 4096 "Generic Error" 8192 "Current" 8448 "Current - Device input side" 8704 "Current - Inside device" 8960 "Current - Device output side" 12288 "Voltage" 12544 "Voltage - Mains Voltage" 12800 "Voltage  - Inside device" 13056 "Voltage - Output Voltage" 16384 "Temperature" 16640 "Temperature - Ambient temperature" 16896 "Temperature - Device temperature" 20480 "Device hardware" 24576 "Device Software" 24832 "Device Software - Internal software" 25088 "Device Software - User software" 25344 "Device software - Data set" 28672 "Additional modules" 32768 "Monitoring" 33024 "Monitoring - Communication" 33040 "Monitoring - Comms - CAN Overrun" 33056 "Monitoring - Comms - CAN in Error passive mode" 33072 "Monitoring - Comms - Lifeguard/heartbeat" 33088 "Monitoring - Comms - Recovered from bus-off" 33104 "Monitoring - Comms - CAN_ID Collision" 33280 "Monitoring - Protocol" 33296 "Monitoring - Protocol - PDO not processed due to length" 33312 "Monitoring - Protocol - PDO length exceeded" 33328 "DAM MPDO not processed" 
+33344 "Monitoring - Protocol - Unexpected sync data length" 33360 "Monitoring - Protocol - RPDO timeout" 36864 "External Error" 61440 "Additional Functions" 65280 "Device Specific" 65281 "Application startup" 65282 "Application Runtime" 65283 "Application Nozzlenet" 65284 "Application CSI" 65285 "Application Logging" 65296 "Camera Startup" 65297 "Camera Runtime - failed" 65298 "Camera Runtime -degraded" 65312 "Sensor Startup" 65313 "Sensor Runtime" 65314 "Sensor Laser error" 65315 "Sensor Memory error" 65316 "Sensor Fan error" 65317 "Sensor Humidity Error" 65318 "Sensor Heater error" 65319 "Sensor Degraded" 65320 "Sensor Sleep mode";
+VAL_ 247 Generic_Error 0 "Inactive" 1 "Active";
+VAL_ 247 Current_Error 0 "Inactive" 1 "Active";
+VAL_ 247 Voltage_Error 0 "Inactive" 1 "Active";
+VAL_ 247 Temperature_Error 0 "Inactive" 1 "Active";
+VAL_ 247 Comms_Error_Overrun 0 "Inactive" 1 "Active";
+VAL_ 247 Device_Profile_Specific_Error 0 "Inactive" 1 "Active";
+VAL_ 247 Manufacturer_Specific_Error 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1HB 0 "Bootup" 1 "Operational" 2 "Pre-Operational" 3 "Stopped";
+VAL_ 1015 PM2HB 0 "Bootup" 1 "Operational" 2 "Pre-Operational" 3 "Stopped";
+VAL_ 1015 PM3HB 0 "Bootup" 1 "Operational" 2 "Pre-Operational" 3 "Stopped";
+VAL_ 1015 PM4HB 0 "Bootup" 1 "Operational" 2 "Pre-Operational" 3 "Stopped";
+VAL_ 1015 PM5HB 0 "Bootup" 1 "Operational" 2 "Pre-Operational" 3 "Stopped";
+VAL_ 1015 RearFailureMode_Left 1 "On" 0 "Off";
+VAL_ 1015 RearFailureMode_Mid 1 "On" 0 "Off";
+VAL_ 1015 RearFailureMode_Right 1 "On" 0 "Off";
+VAL_ 1015 PM0_degraded_mode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0HB 0 "Bootup" 1 "Operational" 2 "Pre-Operational" 3 "Stopped";
+VAL_ 1015 PM1_degraded_mode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_degraded_mode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_degraded_mode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0_FanError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1_FanError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_FanError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_FanError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0_FaultMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1_FaultMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_FaultMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_FaultMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_degraded_mode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_FanError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_FaultMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0_HeaterError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1_HeaterError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_HeaterError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_HeaterError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_HeaterError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0_LaserError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1_LaserError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_LaserError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_LaserError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_LaserError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0_MemoryError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1_MemoryError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_MemoryError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_MemoryError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_MemoryError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0_NotReady 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1_NotReady 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_NotReady 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_NotReady 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_NotReady 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0_SleepMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1_SleepMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_SleepMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_SleepMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_SleepMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM0_TempHumidityError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM1_TempHumidityError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM2_TempHumidityError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM3_TempHumidityError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM4_TempHumidityError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM5_degraded_mode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM5_FanError 0 "Inactive" 1 "Active";
+VAL_ 1015 PM5_FaultMode 0 "Inactive" 1 "Active";
+VAL_ 1015 PM5_HeaterError 0 "Inactive" 1 "Active";
+VAL_ 1271 PM5_LaserError 0 "Inactive" 1 "Active";
+VAL_ 1271 PM5_MemoryError 0 "Inactive" 1 "Active";
+VAL_ 1271 PM5_NotReady 0 "Inactive" 1 "Active";
+VAL_ 1271 PM5_SleepMode 0 "Inactive" 1 "Active";
+VAL_ 1271 PM5_TempHumidityError 0 "Inactive" 1 "Active";
+
+SIG_VALTYPE_ 643 Acceleration_X : 1;
+SIG_VALTYPE_ 643 Gyroscope_X : 1;
+SIG_VALTYPE_ 899 Acceleration_Y : 1;
+SIG_VALTYPE_ 899 Gyroscope_Y : 1;
+SIG_VALTYPE_ 1155 Acceleration_Z : 1;
+SIG_VALTYPE_ 1155 Gyroscope_Z : 1;
+SIG_VALTYPE_ 644 Altitude : 1;
+SIG_VALTYPE_ 900 Longitude : 1;
+SIG_VALTYPE_ 900 Latitude : 1;
+SIG_VALTYPE_ 901 TruckRoadSpeed : 1;
+SIG_VALTYPE_ 1157 Value : 1;

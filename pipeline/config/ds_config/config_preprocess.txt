@@ -1,0 +1,34 @@
+[property]
+enable = 1
+target-unique-ids = 1
+network-input-order = 0
+process-on-frame = 1
+unique-id = 5
+gpu-id = 0
+maintain-aspect-ratio = 1
+symmetric-padding = 1
+processing-width = 480
+processing-height = 480
+scaling-buf-pool-size = 6
+tensor-buf-pool-size = 6
+network-input-shape = 1;3;480;480
+network-color-format = 1
+tensor-data-type = 5
+tensor-name = Input
+scaling-pool-memory-type = 0
+scaling-pool-compute-hw = 1
+scaling-filter = 0
+custom-lib-path = /opt/nvidia/deepstream/deepstream/lib/gst-plugins/libcustom2d_preprocess.so
+custom-tensor-preparation-function = CustomTensorPreparation
+
+[user-configs]
+pixel-normalization-factor = 1.0
+operate-on-gie-id = 1
+
+[group-0]
+src-ids = 3
+custom-input-transformation-function = CustomAsyncTransformation
+process-on-roi = 1
+roi-params-src-0 = 230;100;960;960
+draw-roi = 0
+

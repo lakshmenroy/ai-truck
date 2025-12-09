@@ -1,0 +1,28 @@
+[Unit]
+Description=SmartAssist Azure Uploader
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /mnt/syslogic_sd_card/bin/uploader.py
+WorkingDirectory=/mnt/syslogic_sd_card/bin
+
+Restart=always
+RestartSec=10
+StartLimitIntervalSec=300
+StartLimitBurst=5
+WatchdogSec=60
+
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-uploader
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/mnt/syslogic_sd_card
+
+[Install]
+WantedBy=multi-user.target
