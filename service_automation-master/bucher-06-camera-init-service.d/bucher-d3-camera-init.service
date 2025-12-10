@@ -1,0 +1,21 @@
+[Unit]
+Description=bucher camera monitoring service for LVDS cameras
+After=network.target bucher-can-init-250k.service
+
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /usr/local/sbin/bucher/initalise_bucher_d3_cameras_on_boot.py
+Restart=on-failure
+RestartSec=60s
+Environment=PATH="/usr/local/cuda/bin:$PATH"
+remainsAfterExit=yes
+# StandardOutput and StandardError default to journal
+# StandardOutput=journal
+# StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
+
+
+

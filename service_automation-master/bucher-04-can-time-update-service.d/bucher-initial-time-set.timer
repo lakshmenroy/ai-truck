@@ -1,0 +1,11 @@
+[Unit]
+Description=Delay Before Starting Initial Time Set
+After=network.target bucher-can.service
+
+[Timer]
+OnBootSec=12
+Unit=bucher-initial-time-set.service
+
+[Install]
+WantedBy=timers.target
+

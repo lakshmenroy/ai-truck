@@ -1,0 +1,125 @@
+[Unit]
+Description=Custom Logging Service
+# Ensures the basic system initialization is done before starting this service
+Requires=sysinit.target
+# Specifies the order of service startup and shutdown
+After=sysinit.target basic.target multi-user.target bucher-d3-camera-init.service bucher-custom-video-test-launcher.service
+# After=sysinit.target basic.target multi-user.target bucher-d3-camera-init.service systemd-journald.socket
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Service]
+Type=simple
+# Define environment variables for runtime directory and PID file
+Environment=SMART_SWEEPER_APP_RUNTIME_INFO_DIR=/run/bucher_smart_sweeper_app
+# Environment=PID_FILE=${SMART_SWEEPER_APP_RUNTIME_INFO_DIR}/smart_sweeper_pipeline_app.pid
+Environment=PID_FILE=/run/bucher_smart_sweeper_app/smart_sweeper_main_app.pid
+#                    /run/bucher_smart_sweeper_app/smart_sweeper_main_app.pid
+# %Y_%m_%d_%H%M
+Environment=PIDFILE=/run/bucher_smart_sweeper_app/smart_sweeper_main_app.pid
+Environment=LOGFILE_NAME_DATETIME_STRING_LOCATION=/run/bucher_smart_sweeper_app/smart_sweeper_logfile_name_datetime_string.txt
+#Environment=LOGFILE_NAME_DATETIME_STRING=$(date +'%Y_%m_%d_%H%M')
+Environment=SSWP_RUN_MODE=SYSTEMD_SIMPLE_SERVICE
+
+
+# export HOME=/home/ganindu  # Set HOME if not already set
+# export PATH="/usr/local/cuda/bin:$PATH"
+# export PATH="/usr/src/tensorrt/bin:$PATH"
+# export PYENV_ROOT="$HOME/.pyenv"
+# add the env variables above 
+Environment=HOME=/home/bucher
+# Environment=PATH="$PATH/usr/local/cuda/bin:/usr/src/tensorrt/bin:/home/ganindu/.pyenv/bin"
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/cuda/bin:/usr/src/tensorrt/bin:/mnt/ssd/csi_pipeline/test-orin-py/bin/
+
+#Environment=LD_PRELOAD=/mnt/ssd/workspace/ganindu_ws/pyenv_install_dir/pyenv/versions/PY38-TEST/lib/python3.8/site-packages/scikit_learn.libs/libgomp-d22c30c5.so.1.0.0
+
+#Environment=GST_PLUGIN_PATH=/opt/nvidia/deepstream/deepstream-6.2/lib/gst-plugins
+#Environment=LD_LIBRARY_PATH=/opt/nvidia/deepstream/deepstream/lib:$LD_LIBRARY_PATH
+#Environment=PATH=/usr/local/cuda-11.4/bin:$PATH
+#Environment=PATH=/usr/local/cuda-11.4/bin:$PATH
+
+
+
+# Environment=PATH=$PYENV_ROOT/bin:$PATH
+# EnvironmentFile=
+
+# Environment=USER=ganindu
+
+StandardOutput=journal
+# StandardOutput=null
+
+StandardError=journal
+
+
+# PIDFile=${PID_FILE}
+# WorkingDirectory=
+# SuccessExitStatus= 
+# RestartPreventExitStatus=
+# RestartForceExitStatus=
+# TimerSlackNSec=
+# Nice=
+# RuntimeDirectory=, StateDirectory=, CacheDirectory=, LogsDirectory=, ConfigurationDirectory=
+# ExecSearchPath=
+# WorkingDirectory=
+
+
+# Ensure the runtime directory exists, no error if it already does
+#ExecStartPre=/bin/mkdir -p ${SMART_SWEEPER_APP_RUNTIME_INFO_DIR}
+# Remove the existing PID file if it exists to avoid startup issues
+#ExecStartPre=/bin/bash -c '[ ! -f "${PID_FILE}" ] || rm -f "${PID_FILE}"'
+
+#ExecStartPre=/bin/mkdir -p $SMART_SWEEPER_APP_RUNTIME_INFO_DIR
+#ExecStartPre=/bin/bash -c '[ ! -f "$PID_FILE" ] || rm -f "$PID_FILE"'
+
+
+# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+# ExecStartPre=/bin/sh -c 'export PATH="$PATH:/usr/local/cuda/bin:/usr/src/tensorrt/bin:/home/ganindu/.pyenv/bin"'
+
+# ExecStartPre-=/bin/sh -c 'command -v pyenv >/dev/null || export "$PATH/usr/local/cuda/bin:/usr/src/tensorrt/bin:/home/ganindu/.pyenv/bin"'
+
+# Command to start the service
+# ExecStartPre=/bin/bash /mnt/ssd/workspace/ganindu_ws/services_automation/bucher-7-smart-sweeper-service.d/run_pipeline_at_system_startup.sh
+
+# ExecStartPre=/home/ganindu/.pyenv/bin/pyenv activate PY3816
+
+
+#ExecStart=/home/ganindu/.pyenv/versions/PY3816/bin/python /mnt/ssd/workspace/ganindu_ws/scripts/v65e_camera_logger_NZNV232_ROI_udp_sink.py
+
+#ExecStart=/home/ganindu/.pyenv/versions/PY38-TORCH/bin/python /mnt/ssd/workspace/ganindu_ws/scripts/v65e_camera_logger_NZNV232_ROI_udp_sink.py
+# without tracker
+#ExecStart=/home/ganindu/.pyenv/versions/PY38-TORCH/bin/python /mnt/ssd/csi_pipeline/test_nozzlenet.py
+# with tracker 
+ExecStart=/mnt/ssd/csi_pipeline/test-orin-py/bin/python /mnt/ssd/csi_pipeline/manager.py
+
+# test_nozzlenet_infer_on_tracker_metadata.py 
+# Command to stop the service, with a warning if PID file is missing
+#ExecStopPre=/bin/bash -c '/usr/bin/echo "********************************************Preparing to Stop the Service.**************************************************" >&2'
+
+
+# this requires installing socat -> sudo apt-get install socat
+#ExecStop=/bin/bash -c '/usr/bin/echo stop | /usr/bin/socat - UNIX-CONNECT:/tmp/smart_sweeper_pipeline_comms_socket'
+#ExecStopPost=/bin/sleep 5
+#ExecStopPost=/bin/sh -c '[ -f "${PID_FILE}" ] && /bin/kill -s SIGINT $(cat "${PID_FILE}") || /usr/bin/echo "Warning: PID file not found; the service may not have started properly." >&2'
+
+# commands to run after ExecStop or an unexpected failure
+#ExecStopPost=/bin/sh -c '[ ! -f "${PID_FILE}" ] || rm -f "${PID_FILE}"'
+#ExecStopPost=/bin/sh  /mnt/ssd/startup/services_automation/bucher-7-smart-sweeper-service.d/set_background.sh
+
+GuessMainPID=no
+
+# Restart policy in case of failure
+Restart=on-failure
+RestartSec=30s
+# RestartMaxDelaySec=300s
+
+# Allow ample time for the service to start
+TimeoutStartSec=60s
+
+# Allow some time for the service to gracefully stop
+TimeoutStopSec=30s
+
+[Install]
+# Specifies that this service should start when the system reaches the multi-user runlevel
+WantedBy=multi-user.target

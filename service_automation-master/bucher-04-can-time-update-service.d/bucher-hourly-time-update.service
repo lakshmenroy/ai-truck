@@ -1,0 +1,12 @@
+[Unit]
+Description=Hourly Time Update from GPS
+After=network.target bucher-can.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /usr/local/sbin/bucher/check-can-time-message-and-trigger-time-update-script.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run bucher-syslogic-heartbeat.service every 5 minutes
+
+[Timer]
+OnBootSec=1s
+OnUnitActiveSec=1s
+Unit=bucher-syslogic-heartbeat.service
+
+[Install]
+WantedBy=timers.target

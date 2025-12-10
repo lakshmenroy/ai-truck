@@ -1,0 +1,21 @@
+# /etc/systemd/system/smart-sweeper-gpio-ignition-signal-monitor.timer
+
+[Unit]
+Description=Timer for Smart GPIO Ignition Signal Monitor
+Requires=sysinit.target 
+After=sysinit.target
+Conflicts=shutdown.target 
+Before=shutdown.target
+
+[Timer]
+OnStartupSec=5s
+OnUnitActiveSec=5s
+Unit=bucher-smart-sweeper-gpio-ignition-signal-monitor.service
+AccuracySec=1s
+RandomizedDelaySec=2s
+WakeSystem=true
+
+
+
+[Install]
+WantedBy=timers.target

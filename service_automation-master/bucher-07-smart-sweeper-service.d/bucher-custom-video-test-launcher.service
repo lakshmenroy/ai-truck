@@ -1,0 +1,50 @@
+[Unit]
+Description=Bucher Custom Video Test Launcher Service
+After=network.target bucher-d3-camera-init.service
+Requires=bucher-d3-camera-init.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+Environment=SMART_SWEEPER_APP_RUNTIME_INFO_DIR=/run/bucher_smart_sweeper_app
+Environment=PID_FILE=/run/bucher_smart_sweeper_app/smart_sweeper_main_app.pid
+Environment=PIDFILE=/run/bucher_smart_sweeper_app/smart_sweeper_main_app.pid
+Environment=SSWP_RUN_MODE=SYSTEMD_NOTIFY_SERVICE
+
+Environment=HOME=/home/bucher
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/cuda/bin:/usr/src/tensorrt/bin:/mnt/ssd/csi_pipeline/test-orin-py/bin/
+Environment=GST_PLUGIN_PATH=/opt/nvidia/deepstream/deepstream/lib/gst-plugins
+Environment=LD_LIBRARY_PATH=/opt/nvidia/deepstream/deepstream/lib:$LD_LIBRARY_PATH
+Environment=PYENV_VIRTUALENV_INIT=1
+
+# Uncomment the following line to enable DRM mode setting
+Environment=ENABLE_DRM_MODESET=1
+
+StandardOutput=journal
+StandardError=journal
+
+ExecStartPre=/bin/mkdir -p $SMART_SWEEPER_APP_RUNTIME_INFO_DIR
+ExecStartPre=/bin/bash -c '[ ! -f "$PID_FILE" ] || rm -f "$PID_FILE"'
+ExecStartPre=/bin/bash -c '[ -n "$ENABLE_DRM_MODESET" ] && /sbin/modprobe nvidia-drm modeset=1 || echo "DRM mode setting not enabled" >&2'
+#ExecStartPre=/bin/bash -c '[ -f /mnt/ssd/media/logos/BUC_MUN_Logo_RGB_LAn1920x1080_Black_BG_rev_2_cropped.raw ] && /usr/bin/dd if=/mnt/ssd/media/logos/BUC_MUN_Logo_RGB_LAn1920x1080_Black_BG_rev_2_cropped.raw of=/dev/fb0 &> /dev/null || echo "Warning: Logo file not found" >&2'
+
+ExecStart=/mnt/ssd/csi_pipeline/test-orin-py/bin/python /mnt/ssd/csi_pipeline/pipeline_w_logging.py
+
+ExecStop=/bin/bash -c '/usr/bin/echo stop | /usr/bin/socat - UNIX-CONNECT:/tmp/smart_sweeper_pipeline_comms_socket'
+ExecStopPost=/bin/sleep 5
+ExecStopPost=/bin/sh -c '[ -f "${PID_FILE}" ] && /bin/kill -s SIGINT $(cat "${PID_FILE}") || /usr/bin/echo "Warning: PID file not found; the service may not have started properly." >&2'
+ExecStopPost=/bin/sh -c '[ ! -f "${PID_FILE}" ] || rm -f "${PID_FILE}"'
+#ExecStopPost=/bin/bash -c '[ -f /mnt/ssd/media/logos/BUC_MUN_Logo_RGB_LAn1920x1080_Black_BG_rev_2_cropped.raw ] && /usr/bin/dd if=/mnt/ssd/media/logos/BUC_MUN_Logo_RGB_LAn1920x1080_Black_BG_rev_2_cropped.raw of=/dev/fb0 &> /dev/null || echo "Warning: Logo file not found" >&2'
+
+GuessMainPID=no
+
+Restart=on-failure
+RestartSec=30s
+
+TimeoutStartSec=300s
+TimeoutStopSec=60s
+
+[Install]
+WantedBy=multi-user.target

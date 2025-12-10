@@ -1,0 +1,12 @@
+[Unit]
+Description=Timer for Hourly Time Update from GPS
+After=network.target bucher-can.service
+
+[Timer]
+OnBootSec=1h
+OnUnitActiveSec=1h
+Unit=bucher-hourly-time-update.service
+
+[Install]
+WantedBy=timers.target
+

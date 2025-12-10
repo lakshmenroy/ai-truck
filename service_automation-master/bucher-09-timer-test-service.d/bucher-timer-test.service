@@ -1,0 +1,24 @@
+[Unit]
+Description=timer testing service, 
+# Requires=sysinit.target bucher-gpio-export.service
+# After=sysinit.target bucher-gpio-export.service
+# Conflicts=shutdown.target
+# Before=shutdown.target
+
+[Service]
+Type=simple
+# Environment=LOCK_FILE=/run/lock/bucher_timer_test_service.lock
+# ExecStartPre=/bin/sh -c 'if [ -e "${LOCK_FILE}" ]; then exit 1; else touch "${LOCK_FILE}"; fi'
+ExecStart=/bin/bash /mnt/ssd/workspace/ganindu_ws/services_automation/bucher-7-timer-test-service.d/timer_test.sh
+# ExecStop=/bin/rm -f "${LOCK_FILE}"
+
+# Restart=on-failure
+# RestartSec=1s
+# StandardOutput and StandardError default to journal
+# StandardOutput=journal
+# StandardError=inherit
+# RemainAfterExit=yes
+
+
+[Install]
+WantedBy=multi-user.target

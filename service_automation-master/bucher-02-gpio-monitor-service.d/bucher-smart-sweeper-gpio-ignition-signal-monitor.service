@@ -1,0 +1,21 @@
+[Unit]
+Description=GPIO Monitoring Service to Turn Off the System When the IGNITION Signal Is Not Present
+Requires=sysinit.target bucher-gpio-setup.service
+After=sysinit.target bucher-gpio-setup.service
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Service]
+Type=simple
+Environment=LOCK_FILE=/run/lock/bucher_gpio_monitor_service.lock
+Environment=PID_FILE=/run/bucher_smart_sweeper_app/smart_sweeper_main_app.pid
+Environment=SMART_SWEEPER_APP_SERVICE_NAME=bucher-custom-video-test-launcher
+ExecStartPre=/bin/sh -c 'if [ -e "${LOCK_FILE}" ]; then exit 0; else touch "${LOCK_FILE}"; fi'
+ExecStartPre=/bin/sh -c 'if [ -e "${PID_FILE}" ]; then export SMART_SWEEPER_APP_PID=$(cat "${PID_FILE}"); else echo "PID file not found using fallbacks"; fi'
+ExecStart=/bin/bash /usr/local/sbin/bucher/gpio_actions.sh
+ExecStartPost=/bin/rm -f "${LOCK_FILE}"
+ExecStop=/bin/rm -f "${LOCK_FILE}"
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target

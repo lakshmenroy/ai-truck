@@ -1,0 +1,99 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: proemion_telematics_unit JCM AI_ECU
+
+
+BO_ 1812 JVMStatus: 1 JCM
+ SG_ JVMheartbeat : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 517 CAN202h_VehicleSerialNumber: 8 JCM
+ SG_ EQ_number_high_order : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ EQ_number_low_order : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ EQ_number_mid_order : 56|8@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 515 CAN203h_TrackerMsg1: 8 JCM
+ SG_ Nozzle1downTMSCS : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Nozzle2downTMS : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ NozGapOpen : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ NozGapClose : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Pause_active : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AutoSweepActive : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 644 Altitude_Time: 8 Vector__XXX
+SG_ Altitude : 0|32@1- (1,0) [-3.4E038|3.4E038] "" Vector__XXX
+SG_ Device_Time : 32|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+
+BO_ 900 LongitudeLatitude: 8 Vector__XXX
+SG_ Longitude : 0|32@1- (1,0) [-180|180] "" Vector__XXX
+SG_ Latitude : 32|32@1- (1,0) [-180|180] "" Vector__XXX
+
+BO_ 645 Satellites_Heading: 8 Vector__XXX
+SG_ ActiveSatellites : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ Heading : 8|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+
+BO_ 4 SmartSweeperECU: 8 Vector__XXX
+ SG_ Status : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Errors_camera_detection : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Errors_lens : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ 
+BO_ 258 CAN102_Longitude_Latitude: 8 Vector__XXX
+SG_ Longitude : 0|32@1- (1,0) [-999999999|999999999] "" Vector__XXX
+SG_ Latitude : 32|32@1- (1,0) [-999999999|999999999] "" Vector__XXX
+
+BO_ 257 CAN101_Heading_Satelites: 5 Vector__XXX
+SG_ Satellites : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+SG_ Heading : 8|32@1- (1,0) [-999999999|9999999999] "" Vector__XXX
+
+BO_ 256 CAN100_Altitude_Time: 8 Vector__XXX
+SG_ Altitude : 0|32@1- (0.001,0) [-3.4E035|3.4E035] "" Vector__XXX
+SG_ Unix_time : 32|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+
+
+
+CM_ BU_ proemion_telematics_unit "Proemion telematics unit ";
+CM_ BU_ JCM "Bucher Automation Controller";
+CM_ BU_ AI_ECU "Bucher Smart Sweeper Controller";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "CAN";
+VAL_ 1812 JVMheartbeat 5 "Operational" 4 "Stopped" 127 "Preoperational" 0 "Bootup" 255 "Offline" ;
+VAL_ 4 Status 5 "Operational" 4 "Stopped" 127 "PreOperational" 0 "Bootup" 255 "offline" ;
+VAL_ 4 Errors_camera_detection 1 "errors_active" 2 "front_camera_not_detected" 3 "rear_camera_not_detected" 4 "left_camera_not_detected" 5 "right_camera_not_detected" ;
+VAL_ 4 Errors_lens 1 "errors_active" 2 "front_camera_picture_error" 3 "rear_camera_picture_error" 4 "left_camera_picture_error" 5 "right_camera_picture_error" ;
+SIG_VALTYPE_ 258 Longitude : 1;
+SIG_VALTYPE_ 258 Latitude : 1;
+SIG_VALTYPE_ 257 Heading : 1;
+SIG_VALTYPE_ 256 Altitude : 1;
+

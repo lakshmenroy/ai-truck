@@ -1,0 +1,16 @@
+[Unit]
+Description=Initial Time Set from GPS on CAN Message Detection
+After=network.target bucher-can.service
+
+
+[Service]
+Type=simple
+#run the systemctl restart   bucher-can.service
+# ExecStartPre#
+ExecStart=/bin/bash /usr/local/sbin/bucher/check-can-time-message-and-trigger-time-update-script.sh 
+Restart=on-failure
+RestartSec=300  # Retry every 5 minutes if the script fails
+
+[Install]
+WantedBy=multi-user.target
+

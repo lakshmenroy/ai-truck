@@ -1,0 +1,15 @@
+[Unit]
+Description=Setup CAN0 Interface on Jetson Orin (250kbit/s) with Resilience
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/bucher/setup_can0.sh
+ExecStop=/usr/bin/ip link set can0 down
+ExecStopPost=/usr/bin/rmmod mttcan
+Restart=on-failure
+RestartSec=5s
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,18 @@
+# /etc/systemd/system/bucher-timer-test.timer
+
+[Unit]
+Description=Bucher Timer test timer 
+Requires=sysinit.target 
+After=sysinit.target
+Conflicts=shutdown.target 
+Before=shutdown.target
+
+[Timer]
+OnStartupSec=5s
+OnUnitActiveSec=5s
+Unit=bucher-timer-test.service
+AccuracySec=1s
+
+
+[Install]
+WantedBy=timers.target

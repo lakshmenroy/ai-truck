@@ -1,0 +1,14 @@
+[Unit]
+Description=CAN heartbeat from syslogic for jvm usage
+Requires=bucher-can.service
+
+[Service]
+Type=oneshot
+Environment=PIDFILE=/run/bucher_smart_sweeper_app/smart_sweeper_main_app.pid
+Environment=SSWP_RUN_MODE=SYSTEMD_NOTIFY_SERVICE
+ExecStart=/bin/bash /mnt/ssd/workspace/ganindu_ws/services_automation/bucher-10-syslogic-heartbeat-service.d/syslogic-heartbeat.sh
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
