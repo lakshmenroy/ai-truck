@@ -1,0 +1,40 @@
+# SmartAssist Camera Initialization Service
+# Initializes and validates cameras on boot
+# Location: pipeline/systemd/smartassist-camera-init.service
+#
+# Based on: bucher-d3-camera-init.service
+# Install: sudo cp pipeline/systemd/smartassist-camera-init.service /etc/systemd/system/
+
+[Unit]
+Description=SmartAssist Camera Initialization Service
+Documentation=https://github.com/your-org/SmartAssist
+After=network.target
+Before=smartassist-pipeline.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+# Paths
+Environment=PATH=/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Environment=PYTHONUNBUFFERED=1
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-camera-init
+
+# Execute camera initialization
+ExecStart=/usr/bin/python3 /opt/smartassist/tools/initialize_cameras.py
+
+# Restart policy
+Restart=on-failure
+RestartSec=60s
+RemainAfterExit=yes
+
+# Timeout
+TimeoutStartSec=120s
+
+[Install]
+WantedBy=multi-user.target

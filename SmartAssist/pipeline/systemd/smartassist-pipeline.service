@@ -1,0 +1,75 @@
+# SmartAssist Pipeline Service
+# Main application service for garbage detection system
+# Location: pipeline/systemd/smartassist-pipeline.service
+#
+# Based on: bucher-custom-video-test-launcher.service
+# Install: sudo cp pipeline/systemd/smartassist-pipeline.service /etc/systemd/system/
+
+[Unit]
+Description=SmartAssist Pipeline - Garbage Detection System
+Documentation=https://github.com/your-org/SmartAssist
+After=network.target smartassist-can-server.service smartassist-camera-init.service
+Requires=smartassist-can-server.service
+Wants=smartassist-camera-init.service
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Service]
+Type=notify
+User=root
+Group=root
+
+# Runtime directories
+Environment=SMART_SWEEPER_APP_RUNTIME_INFO_DIR=/run/smartassist
+Environment=PID_FILE=/run/smartassist/pipeline.pid
+Environment=PIDFILE=/run/smartassist/pipeline.pid
+Environment=SSWP_RUN_MODE=SYSTEMD_NOTIFY_SERVICE
+
+# Paths
+Environment=HOME=/root
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/cuda/bin:/usr/src/tensorrt/bin
+
+# GStreamer and DeepStream
+Environment=GST_PLUGIN_PATH=/opt/nvidia/deepstream/deepstream/lib/gst-plugins
+Environment=LD_LIBRARY_PATH=/opt/nvidia/deepstream/deepstream/lib
+Environment=GST_DEBUG_DUMP_DOT_DIR=/mnt/syslogic_sd_card/pipeline_dots
+
+# NVIDIA DRM modeset
+Environment=ENABLE_DRM_MODESET=1
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-pipeline
+
+# Pre-start setup
+ExecStartPre=/bin/mkdir -p ${SMART_SWEEPER_APP_RUNTIME_INFO_DIR}
+ExecStartPre=/bin/bash -c '[ ! -f "${PID_FILE}" ] || rm -f "${PID_FILE}"'
+ExecStartPre=/bin/bash -c '[ -n "$ENABLE_DRM_MODESET" ] && /sbin/modprobe nvidia-drm modeset=1 || echo "DRM mode setting not enabled" >&2'
+
+# Main execution
+WorkingDirectory=/opt/smartassist/pipeline/src
+ExecStart=/usr/bin/python3 /opt/smartassist/pipeline/src/main.py
+
+# Graceful shutdown
+ExecStop=/bin/bash -c '/usr/bin/echo stop | /usr/bin/socat - UNIX-CONNECT:/tmp/smartassist_pipeline.sock'
+ExecStopPost=/bin/sleep 5
+ExecStopPost=/bin/sh -c '[ -f "${PID_FILE}" ] && /bin/kill -s SIGINT $(cat "${PID_FILE}") || /usr/bin/echo "Warning: PID file not found" >&2'
+ExecStopPost=/bin/sh -c '[ ! -f "${PID_FILE}" ] || rm -f "${PID_FILE}"'
+
+# Process management
+GuessMainPID=no
+Restart=on-failure
+RestartSec=30s
+
+# Timeouts
+TimeoutStartSec=300s
+TimeoutStopSec=60s
+WatchdogSec=60s
+
+# Resource limits
+LimitNOFILE=65536
+MemoryLimit=8G
+
+[Install]
+WantedBy=multi-user.target
