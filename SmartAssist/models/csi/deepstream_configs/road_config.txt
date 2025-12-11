@@ -1,0 +1,27 @@
+# CSI Road Segmentation Configuration
+# Configuration for road segmentation inference
+# Location: models/csi/deepstream_configs/road_config.txt
+
+[property]
+gpu-id=0
+net-scale-factor=0.0039215697906911373
+offsets=0.0;0.0;0.0
+model-color-format=0
+model-engine-file=/mnt/ssd/model_repository/road-seg/road_seg_model.plan
+labelfile-path=/mnt/ssd/csi_pipeline/models/road-seg/labels.txt
+infer-dims=3;608;416
+uff-input-order=0
+uff-input-blob-name=input_1
+batch-size=2
+network-mode=1
+num-detected-classes=1
+interval=0
+gie-unique-id=2
+output-blob-names=softmax_1
+segmentation-threshold=0.5
+network-type=100
+maintain-aspect-ratio=0
+symmetric-padding=0
+
+[class-attrs-all]
+pre-cluster-threshold=0.2

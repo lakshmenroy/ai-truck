@@ -1,0 +1,124 @@
+# Nozzlenet Model Configuration
+# Model-specific settings for nozzlenet inference
+# Location: models/nozzlenet/config/nozzlenet_config.yaml
+
+# Model information
+model:
+  name: "nozzlenet-v2"
+  version: "V253"
+  architecture: "ssd_resnet18"
+  input_size: [480, 480]
+  input_channels: 3
+  batch_size: 1
+
+# Detection classes
+classes:
+  num_classes: 6
+  class_names:
+    - "background"
+    - "action_object"
+    - "check_nozzle"
+    - "gravel"
+    - "nozzle_blocked"
+    - "nozzle_clear"
+  
+  class_ids:
+    background: 0
+    action_object: 1
+    check_nozzle: 2
+    gravel: 3
+    nozzle_blocked: 4
+    nozzle_clear: 5
+
+# Detection thresholds
+thresholds:
+  confidence: 0.4           # Minimum confidence for detections
+  nms_threshold: 0.2        # Non-maximum suppression threshold
+  group_threshold: 1        # Grouping threshold
+
+# State machine configuration
+state_machine:
+  enabled: true
+  states:
+    idle: 0
+    clear: 1
+    blocked: 2
+    check: 3
+    gravel: 4
+  
+  fan_speeds:
+    off: 0
+    low: 2      # Clear state
+    medium: 5   # Check state
+    high: 8     # Blocked state
+  
+  timeouts:
+    state_change: 2.0       # Minimum time between state changes (seconds)
+    action_object: 5.0      # Action object timeout (seconds)
+
+# ROI (Region of Interest) configuration
+roi:
+  x: 230
+  y: 100
+  width: 960
+  height: 960
+
+# Preprocessing
+preprocessing:
+  mean: [123.675, 116.28, 103.53]
+  std: [58.395, 57.12, 57.375]
+  scale_factor: 0.0039215697906911373
+
+# Post-processing
+postprocessing:
+  min_box_width: 10
+  min_box_height: 10
+  max_box_width: 2000
+  max_box_height: 2000
+
+# OSD (On-Screen Display) configuration
+osd:
+  display_labels: true
+  display_confidence: true
+  border_width: 5
+  colors:
+    clear: [0.1411, 0.8019, 0.3254, 0.9]       # Green
+    blocked: [1.0, 0.3764, 0.2156, 0.9]        # Red
+    check: [0.96078431, 0.57647059, 0.19215686, 0.9]  # Orange
+    gravel: [0.678, 0.847, 0.902, 0.9]         # Light Blue
+    action_object: [1.0, 0.0, 0.48627451, 0.9] # Pink
+  
+  labels:
+    num_labels: 2
+    label_0_position: [1, 1]       # Main inference info
+    label_1_position: [0, 1040]    # PM sensor data
+
+# Camera mapping
+cameras:
+  primary: "right"        # primary_nozzle
+  secondary: "left"       # secondary_nozzle
+
+# Logging
+logging:
+  enable_csv: true
+  log_detections: true
+  log_state_changes: true
+  csv_columns:
+    - "time"
+    - "confidence"
+    - "nozzle_clear"
+    - "nozzle_blocked"
+    - "check_nozzle"
+    - "gravel"
+    - "action_object"
+    - "sm_current_state"
+    - "sm_current_status"
+    - "sm_time_difference"
+    - "ao_status"
+    - "ao_difference"
+
+# Performance
+performance:
+  target_fps: 30
+  max_batch_size: 1
+  enable_tensorrt: true

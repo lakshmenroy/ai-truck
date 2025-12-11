@@ -1,0 +1,85 @@
+# SmartAssist Pipeline Configuration
+# Main configuration file for the inference pipeline
+#
+# Location: pipeline/config/pipeline_config.yaml
+
+# Enable/disable CSI (Clean Street Index) inference
+enable_csi: true
+
+# DeepStream configuration paths
+ds_configs:
+  # Nozzlenet preprocessing configuration
+  preprocess:
+    path: "/mnt/ssd/csi_pipeline/config/ds_config/config_preprocess.txt"
+    network-input-shape: "1;3;480;480"
+    draw-roi: "0"
+    roi-params-src-0: "230;100;960;960"  # x;y;width;height
+  
+  # Nozzlenet inference configuration
+  inference:
+    path: "/mnt/ssd/csi_pipeline/config/ds_config/infer_config.txt"
+    model-engine-file: "/mnt/ssd/model_repository/nozzlenet-v2/V253/ssd_resnet18_epoch_060-nozzlenet-batch-size-1.plan"
+    labelfile-path: "/mnt/ssd/csi_pipeline/models/nozzlenet-v2/V250/labels.txt"
+    infer-dims: "3;480;480"
+    input-tensor-from-meta: "0"
+  
+  # Metadata mux configuration
+  metamux:
+    path: "/mnt/ssd/csi_pipeline/config/ds_config/config_metamux.txt"
+  
+  # Tracker configuration
+  tracker:
+    path: "/mnt/ssd/workspace/ganindu_ws/scripts/nvDCF_tracker_config.yml"
+
+# Source override parameters (for testing with video files)
+# Set override: true to use file instead of camera
+source_override_parameters:
+  source_1:
+    id: 0
+    name: "front"
+    override: false
+    codec: "h264"
+    file_path: "./videos/front_trimmed.mp4"
+  
+  source_2:
+    id: 1
+    name: "rear"
+    override: false
+    codec: "h264"
+    file_path: "./videos/rear_view.mp4"
+  
+  source_3:
+    id: 2
+    name: "primary_nozzle"
+    type: "file"
+    override: false
+    codec: "h264"
+    file_path: "videos/nozzle_grav.mp4"
+  
+  source_4:
+    name: "secondary_nozzle"
+    id: 3
+    override: false
+    codec: "h264"
+    file_path: "./videos/nozzle_view.mp4"
+
+# Display settings
+display:
+  width: 1920
+  height: 1080
+  tiler_rows: 2
+  tiler_columns: 2
+
+# UDP sink settings (for RTSP streaming)
+udp_sink:
+  host: "127.0.0.1"
+  port: 5400
+  codec: "h264"  # h264 or h265
+  bitrate: 4000000
+  
+# High-resolution output settings
+hr_output:
+  enabled: true
+  codec: "h265"
+  bitrate: 8000000
+  directory: "/mnt/syslogic_sd_card/videos"

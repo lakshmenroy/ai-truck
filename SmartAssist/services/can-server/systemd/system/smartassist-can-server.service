@@ -1,0 +1,53 @@
+# SmartAssist CAN Server Service
+# Location: /etc/systemd/system/smartassist-can-server.service
+#
+# Install:
+#   sudo cp smartassist-can-server.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-can-server
+#   sudo systemctl start smartassist-can-server
+#
+# Check status:
+#   systemctl status smartassist-can-server
+#   journalctl -u smartassist-can-server -f
+
+[Unit]
+Description=SmartAssist CAN Server
+Documentation=https://github.com/your-org/SmartAssist
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+# Working directory
+WorkingDirectory=/opt/smartassist/services/can-server
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="PATH=/usr/bin:/usr/local/bin"
+
+# Execute
+ExecStart=/usr/bin/python3 -m src.main
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-can
+
+# Resource limits
+LimitNOFILE=65536
+MemoryLimit=512M
+
+# Security (adjust as needed)
+# PrivateTmp=yes
+# NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,177 @@
+# CSI (Clean Street Index) Model Configuration
+# Model-specific settings for CSI computation
+# Location: models/csi/config/csi_config.yaml
+
+# Model information
+model:
+  name: "csi-dual"
+  version: "v1.0"
+  components:
+    - "road_segmentation"
+    - "garbage_detection"
+
+# Road segmentation model
+road_segmentation:
+  model_name: "road-seg"
+  architecture: "segmentation"
+  input_size: [608, 416]
+  input_channels: 3
+  batch_size: 2
+  unique_id: 2
+  
+  classes:
+    num_classes: 1
+    class_names:
+      - "road"
+  
+  thresholds:
+    segmentation_threshold: 0.5
+  
+  preprocessing:
+    mean: [0.0, 0.0, 0.0]
+    std: [1.0, 1.0, 1.0]
+    scale_factor: 0.0039215697906911373
+
+# Garbage detection model
+garbage_detection:
+  model_name: "garbage-det"
+  architecture: "object_detection"
+  input_size: [608, 416]
+  input_channels: 3
+  batch_size: 2
+  unique_id: 3
+  
+  classes:
+    num_classes: 1
+    class_names:
+      - "garbage"
+  
+  thresholds:
+    confidence: 0.3
+    nms_threshold: 0.2
+    group_threshold: 1
+  
+  preprocessing:
+    mean: [123.675, 116.28, 103.53]
+    std: [58.395, 57.12, 57.375]
+    scale_factor: 0.0039215697906911373
+  
+  postprocessing:
+    min_box_width: 10
+    min_box_height: 10
+    max_box_width: 2000
+    max_box_height: 2000
+
+# CSI computation parameters
+csi_computation:
+  # Road area thresholds (percentage of frame)
+  road_area:
+    min_threshold: 0.1      # Minimum 10% road area required
+    max_threshold: 0.9      # Maximum 90% road area (sanity check)
+  
+  # Garbage area thresholds
+  garbage_area:
+    small_threshold: 0.01   # Small garbage: < 1% of road area
+    medium_threshold: 0.05  # Medium garbage: 1-5% of road area
+    large_threshold: 0.10   # Large garbage: > 5% of road area
+  
+  # CSI calculation
+  calculation:
+    method: "relative"      # "relative" or "absolute"
+    min_csi: 0.0           # Minimum CSI value
+    max_csi: 10.0          # Maximum CSI value
+    default_csi: 10.0      # Default when no road detected
+  
+  # Smoothing
+  smoothing:
+    enabled: true
+    window_size: 5         # Number of frames for moving average
+    alpha: 0.3             # Exponential moving average alpha
+  
+  # Discretization
+  discretization:
+    enabled: true
+    num_bins: 11           # Discrete CSI values: 0-10
+    rounding: "nearest"    # "nearest", "floor", or "ceil"
+
+# Camera mapping
+cameras:
+  front: 
+    direction: "front"
+    index: 0
+    enabled: true
+  rear:
+    direction: "rear"
+    index: 1
+    enabled: true
+
+# Video processing
+video:
+  flip_method: 0           # 0=none, 2=180°, 4=90° CW, 6=90° CCW
+  target_fps: 5            # Target FPS for CSI inference
+  sync_inputs: true        # Synchronize front/rear inputs
+
+# Visualization
+visualization:
+  segvisual:
+    enabled: false          # Enable nvsegvisual overlay
+    alpha: 0.0             # Overlay transparency (0=transparent, 1=opaque)
+    original_background: true
+    width: 608
+    height: 416
+  
+  osd:
+    display_csi: true
+    display_garbage_count: true
+    display_road_percentage: true
+
+# Output metadata
+metadata:
+  attach_to_frame: true
+  metadata_type: "NVDS_CSI_META"
+  structure_id: 0x1001
+  
+  fields:
+    - "relative_csi"
+    - "absolute_csi"
+    - "discrete_csi"
+    - "road_area_percentage"
+    - "garbage_count"
+    - "garbage_area_percentage"
+    - "timestamp"
+
+# Logging
+logging:
+  enable_csv: true
+  log_frame_metadata: true
+  log_csi_values: true
+  csv_columns:
+    - "timestamp"
+    - "direction"
+    - "frame_number"
+    - "relative_csi"
+    - "absolute_csi"
+    - "discrete_csi"
+    - "road_area"
+    - "garbage_count"
+    - "garbage_area"
+
+# Performance
+performance:
+  target_fps: 5
+  max_batch_size: 2
+  enable_tensorrt: true
+  gpu_id: 0
+
+# Quality control
+quality_control:
+  # Sanity checks
+  min_road_area: 0.05      # Reject frames with < 5% road
+  max_garbage_area: 0.5    # Reject frames with > 50% garbage (likely error)
+  
+  # Frame validation
+  validate_frames: true
+  skip_invalid_frames: false
+  
+  # Error handling
+  on_error: "default"      # "default" (use default CSI) or "skip"

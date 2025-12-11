@@ -1,0 +1,16 @@
+# DeepStream Metamux Configuration
+# Configuration for nvdsmetamux element
+# Location: pipeline/deepstream_configs/config_metamux.txt
+
+[property]
+config-file-path=/mnt/ssd/csi_pipeline/config/ds_config/config_metamux.txt
+
+[source0]
+enable=1
+type=3
+src-id-count=4
+
+[source1]
+enable=1
+type=0
+src-id-count=4

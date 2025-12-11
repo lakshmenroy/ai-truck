@@ -1,0 +1,34 @@
+# CSI Garbage Detection Configuration
+# Configuration for garbage detection inference
+# Location: models/csi/deepstream_configs/garbage_config.txt
+
+[property]
+gpu-id=0
+net-scale-factor=0.0039215697906911373
+offsets=123.675;116.28;103.53
+model-color-format=0
+model-engine-file=/mnt/ssd/model_repository/garbage-det/garbage_det_model.plan
+labelfile-path=/mnt/ssd/csi_pipeline/models/garbage-det/labels.txt
+infer-dims=3;608;416
+uff-input-order=0
+uff-input-blob-name=input_1
+batch-size=2
+network-mode=0
+num-detected-classes=1
+interval=0
+gie-unique-id=3
+input-tensor-from-meta=0
+output-blob-names=scores;boxes
+parse-bbox-func-name=NvDsInferParseCustomResnet
+custom-lib-path=/opt/nvidia/deepstream/deepstream/lib/libnvds_infercustomparser.so
+
+[class-attrs-all]
+pre-cluster-threshold=0.3
+group-threshold=1
+eps=0.2
+roi-top-offset=0
+roi-bottom-offset=0
+detected-min-w=10
+detected-min-h=10
+detected-max-w=2000
+detected-max-h=2000

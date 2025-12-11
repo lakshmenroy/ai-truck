@@ -1,0 +1,35 @@
+# DeepStream Tracker Configuration
+# NvDCF tracker configuration
+# Location: pipeline/deepstream_configs/tracker_config.yml
+
+%YAML:1.0
+################################################################################
+# Copyright (c) 2020-2021, NVIDIA CORPORATION. All rights reserved.
+#
+# NVIDIA Corporation and its licensors retain all intellectual property
+# and proprietary rights in and to this software, related documentation
+# and any modifications thereto.  Any use, reproduction, disclosure or
+# distribution of this software and related documentation without an express
+# license agreement from NVIDIA Corporation is strictly prohibited.
+################################################################################
+
+NvDCF:
+  # [General]
+  enable: 1                 # Enable tracker
+  gpuId: 0                  # GPU ID
+  maxTargetsPerStream: 150  # Maximum number of targets per stream
+  
+  # [Feature Extractor]
+  useUniqueID: 0            # Use unique IDs for targets
+  useColorFeature: 1        # Use color features
+  filterLr: 0.12            # Learning rate for filter
+  featureImgSizeLevel: 3    # Feature image size level
+  SearchRegionPaddingScale: 1  # Search region padding scale
+  
+  # [Assignment]
+  maxShadowTrackingAge: 30  # Maximum shadow tracking age
+  probationAge: 3           # Probation age
+  earlyTerminationAge: 1    # Early termination age
+  
+  # [State Estimator]
+  stateEstimator: 1         # State estimator type (1=KF)

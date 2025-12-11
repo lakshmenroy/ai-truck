@@ -1,6 +1,6 @@
 """
 Nozzlenet Model Constants
-Detection categories and state machine constants for nozzle monitoring
+Detection categories and state definitions for nozzle monitoring
 
 VERIFIED: Values from original detection_categories.py
 """
@@ -53,4 +53,4 @@ BORDER_COLOR_ACTION_OBJECT = (1.0, 0.0, 0.48627451, 0.9)  # Pink
 BORDER_WIDTH = 5
 
 # Camera mapping - VERIFIED
-NOZZLE_CAMERAS = ['right', 'left']  # Changed from primary_nozzle, secondary_nozzle
+NOZZLE_CAMERAS = ['right', 'left']  # primary_nozzle, secondary_nozzle

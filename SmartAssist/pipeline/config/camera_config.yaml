@@ -1,0 +1,82 @@
+{
+  "cameras": [
+    {
+      "name": "front",
+      "position": "front",
+      "device_tree_node_id": "43-0021",
+      "device_tree_index": 0,
+      "sensor_id": 0,
+      "gmsl_port": 0,
+      "sensor_mode": 0,
+      "vertical_flip": 0,
+      "horizontal_flip": 0,
+      "converter_flip_method": 0,
+      "do_infer": true,
+      "capture_test_passed": true
+    },
+    {
+      "name": "rear",
+      "position": "rear",
+      "device_tree_node_id": "23-0021",
+      "device_tree_index": 1,
+      "sensor_id": 1,
+      "gmsl_port": 1,
+      "sensor_mode": 0,
+      "vertical_flip": 0,
+      "horizontal_flip": 0,
+      "converter_flip_method": 0,
+      "do_infer": true,
+      "capture_test_passed": true
+    },
+    {
+      "name": "primary_nozzle",
+      "position": "right",
+      "device_tree_node_id": "33-0021",
+      "device_tree_index": 2,
+      "sensor_id": 2,
+      "gmsl_port": 2,
+      "sensor_mode": 0,
+      "vertical_flip": 0,
+      "horizontal_flip": 0,
+      "converter_flip_method": 0,
+      "do_infer": true,
+      "capture_test_passed": true
+    },
+    {
+      "name": "secondary_nozzle",
+      "position": "left",
+      "device_tree_node_id": "13-0021",
+      "device_tree_index": 3,
+      "sensor_id": 3,
+      "gmsl_port": 3,
+      "sensor_mode": 0,
+      "vertical_flip": 0,
+      "horizontal_flip": 0,
+      "converter_flip_method": 0,
+      "do_infer": true,
+      "capture_test_passed": true
+    }
+  ],
+  "sinks": [
+    {
+      "type": "udp",
+      "enabled": true,
+      "host": "127.0.0.1",
+      "port": 5400
+    }
+  ],
+  "metadata_sources": [],
+  "socket_path": "/tmp/smartassist_pipeline.sock",
+  "logging_level": "INFO",
+  "display_height": 1080,
+  "display_width": 1920,
+  "log_frame_height": 540,
+  "log_frame_width": 960,
+  "log_frame_rate": 30,
+  "enable_long_format_logging_output": false,
+  "test_frame_count": 100,
+  "perform_frame_capture_test": true,
+  "send_v4l2_ctl_settings": false,
+  "status_json_path": "/mnt/syslogic_sd_card/status.json",
+  "export_status_json": true
+}

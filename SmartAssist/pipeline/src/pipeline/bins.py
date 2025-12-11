@@ -593,60 +593,28 @@ def create_bucher_inference_bin(app_context):
     if num_nozzlet_sources > 0:
         logger.debug('Creating nozzlenet inference bin...')
         
-        nozzlenet_infer_bin = Gst.Bin.new('BUCHER-nozzlenet-infer-bin')
-        nozzlenet_infer_bin.set_property('message-forward', True)
+        # Import nozzlenet bin creation from models
+        from ...models.nozzlenet.src.bins import create_nozzlenet_inference_bin
         
-        # Create elements
-        pgie = make_element('nvinfer', 'nozzlenet-infer')
-        nozzlenet_infer_placeholder = make_element('identity', 'nozzlenet_infer_placeholder')
-        preprocess = make_element('nvdspreprocess', 'nozzlenet_preprocess')
-        nvvideo_conv_readjuster = make_element('nvvideoconvert', 'resize-back-to-fit-display')
-        caps_filter_readjuster = make_element('capsfilter', 'capsfilter')
-        queue_nozzlenet_post_infer = make_element('queue', 'queue_nozzlenet_post_infer')
+        # Create the bin (probe attachment is inside this function)
+        nozzlenet_infer_bin = create_nozzlenet_inference_bin(app_context, config_paths_dict_)
         
-        elements = [pgie, nozzlenet_infer_placeholder, preprocess, nvvideo_conv_readjuster,
-                   caps_filter_readjuster, queue_nozzlenet_post_infer]
+        if not nozzlenet_infer_bin:
+            logger.error('Failed to create nozzlenet inference bin')
+            return 1
         
-        # Configure elements
-        preprocess.set_property('config-file', preprocess_config_file_path)
-        pgie.set_property('config-file-path', infer_config_file_path)
-        pgie.set_property('unique-id', 1)
-        caps_filter_readjuster.set_property('caps', Gst.Caps.from_string('video/x-raw(memory:NVMM), width=960, height=540'))
-        queue_nozzlenet_post_infer.set_property('leaky', 'downstream')
-        
-        # Add elements to bin
+        # Add nozzlenet bin to inference bin
         Gst.Bin.add(inference_bin, nozzlenet_infer_bin)
-        for element in elements:
-            try:
-                Gst.Bin.add(nozzlenet_infer_bin, element)
-            except Exception as e:
-                logger.error(f"Error adding element {element.get_name()} to nozzlenet_infer_bin: {e}")
-        
-        # Link elements
-        nozzlenet_infer_placeholder.link(preprocess)
-        preprocess.link(pgie)
-        pgie.link(nvvideo_conv_readjuster)
-        nvvideo_conv_readjuster.link(caps_filter_readjuster)
-        caps_filter_readjuster.link(queue_nozzlenet_post_infer)
-        nozzlenet_infer_bin.add_pad(Gst.GhostPad.new('src', get_static_pad(queue_nozzlenet_post_infer, 'src')))
-        
-        # Add nozzlenet probe (CRITICAL!)
-        try:
-            from .probes import nozzlenet_src_pad_buffer_probe
-            tracker_src_pad = get_static_pad(pgie, 'src')
-            tracker_src_pad.add_probe(Gst.PadProbeType.BUFFER, 
-                                     lambda pad, info, u_data: nozzlenet_src_pad_buffer_probe(pad, info, u_data), 0)
-            logger.debug('Nozzlenet probe attached')
-        except ImportError:
-            logger.error('Cannot import nozzlenet probe - inference will not work!')
+        logger.debug('Nozzlenet inference bin added to main inference bin')
         
         # Link to primary nozzle camera
-        primary_inference_queue = inference_bin.get_by_name(f'queue_primary_nozzle_to_inference')
+        primary_inference_queue = inference_bin.get_by_name('queue_primary_nozzle_to_inference')
         if primary_inference_queue:
-            primary_inference_queue.link(nozzlenet_infer_placeholder)
+            primary_inference_queue.link(nozzlenet_infer_bin)
+            logger.debug('Primary nozzle camera linked to nozzlenet inference bin')
         else:
             logger.warning('Primary nozzle inference queue not found')
-    
+               
     # Create CSI probe bin if needed
     if num_csi_sources > 0:
         logger.debug('Creating CSI probe bin...')

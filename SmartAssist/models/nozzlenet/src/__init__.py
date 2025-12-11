@@ -5,14 +5,14 @@ Nozzle detection and state management for SmartAssist system
 This module provides:
 - Detection constants (class IDs, states, colors)
 - State machine (SmartStateMachine for nozzle control)
-- Bin helpers (configuration defaults)
-- Probe helpers (detection mapping, OSD config)
+- Bin creation (create_nozzlenet_inference_bin)
+- Buffer probe (nozzlenet_src_pad_buffer_probe)
 
-NOTE: The actual nozzlenet_src_pad_buffer_probe and bin creation logic
-is in the pipeline module for tight integration with the GStreamer pipeline.
-This module provides the model-specific logic and constants.
+MODULAR STRUCTURE: All nozzlenet logic is self-contained in this module
+for traceability and version management.
 """
 
+# Constants
 from .constants import (
     NOZZLENET_UNIQUE_ID,
     PGIE_CLASS_ID_BACKGROUND,
@@ -48,19 +48,18 @@ from .constants import (
     NOZZLE_CAMERAS
 )
 
+# State machine
 from .state_machine import SmartStateMachine
 
+# Bin creation - REAL function
 from .bins import (
+    create_nozzlenet_inference_bin,
     get_nozzlenet_config_defaults,
     get_nozzlenet_cameras
 )
 
-from .probes import (
-    get_detection_class_mapping,
-    get_osd_label_config,
-    get_csv_column_defaults,
-    format_timestamp
-)
+# Buffer probe - REAL function
+from .probes import nozzlenet_src_pad_buffer_probe
 
 __all__ = [
     # Constants
@@ -100,13 +99,11 @@ __all__ = [
     # State machine
     'SmartStateMachine',
     
-    # Bin helpers
+    # Bin creation - REAL function
+    'create_nozzlenet_inference_bin',
     'get_nozzlenet_config_defaults',
     'get_nozzlenet_cameras',
     
-    # Probe helpers
-    'get_detection_class_mapping',
-    'get_osd_label_config',
-    'get_csv_column_defaults',
-    'format_timestamp',
+    # Buffer probe - REAL function
+    'nozzlenet_src_pad_buffer_probe',
 ]

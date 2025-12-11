@@ -1,0 +1,97 @@
+# SmartAssist Logging Configuration
+# CSV logging, camera info, vehicle info, and signal columns
+#
+# Location: pipeline/config/logging_config.yaml
+
+# Logging settings
+logging_settings:
+  - logging_mode: 2  # 0=off, 1=minimal, 2=full
+  - max_log_duration: 1200  # Maximum log duration in seconds (20 minutes)
+  - logged_data_dir: /mnt/syslogic_sd_card/upload/  # Output directory
+  - overwrite_first_log: 0  # NOT implemented yet
+
+# Camera information
+camera_info:
+  - front:
+      - id: 43-0021
+  - back:
+      - id: 23-0021
+  - right_nozzle:
+      - id: 33-0021
+  - left_nozzle:
+      - id: 13-0021
+  - camera_type: D3
+
+# Device information
+device_info:
+  - device_name: syslogic_
+
+# Vehicle information
+vehicle_info:
+  - serial_number: SN217841
+  - vehicle_type: V65
+
+# Signal columns for CSV logging
+signal_settings:
+  
+  # Camera/AI signals (from nozzlenet probe)
+  camera_signals:
+    - "time"
+    - "confidence"
+    - "nozzle_clear"
+    - "nozzle_blocked"
+    - "check_nozzle"
+    - "gravel"
+    - "action_object"
+    - "sm_current_state"
+    - "sm_current_status"
+    - "sm_time_difference"
+    - "ao_status"
+    - "ao_difference"
+  
+  # CAN signals (from CAN bus)
+  can_signals:
+    - "avifileindex"
+    - "Longitude"
+    - "Latitude"
+    - "Altitude"
+    - "ActiveSatellites"
+    - "Heading"
+    - "Nozzle1"
+    - "Nozzle2"
+    - "SideBrush1"
+    - "SideBrush2"
+    - "BrushCurrent"
+    - "SideBrush1Extension"
+    - "SideBrush2Extension"
+    - "SideBrush1Retraction"
+    - "SideBrush2Retraction"
+    - "Nozzle1WaterSpray"
+    - "Nozzle2WaterSpray"
+    - "SideBrush1WaterSpray"
+    - "SideBrush2WaterSpray"
+    - "Engine_or_FanSpeed"
+    - "SuctionFan"
+    - "WorkLight1"
+    - "WorkLight2"
+    - "NozzleGapOpening"
+    - "NozzleGapClosing"
+    - "Pause"
+    - "AutoSweep"
+    - "GearBox"
+    - "VehicleSpeed"
+    - "EngineRPM"
+  
+  # PM (Particulate Matter) sensor signals
+  pm_signals:
+    - "PM1"
+    - "PM25"
+    - "PM10"
+    - "sensor_timestamp"
+  
+  # CSI (Clean Street Index) signals
+  csi_signals:
+    - "front_csi"
+    - "rear_csi"
+    - "front_garbage_detected"
+    - "rear_garbage_detected"

@@ -1,0 +1,34 @@
+# DeepStream Inference Configuration
+# Configuration for nvinfer element (nozzlenet)
+# Location: pipeline/deepstream_configs/infer_config.txt
+
+[property]
+gpu-id=0
+net-scale-factor=0.0039215697906911373
+offsets=123.675;116.28;103.53
+model-color-format=0
+labelfile-path=/mnt/ssd/csi_pipeline/models/nozzlenet-v2/V250/labels.txt
+model-engine-file=/mnt/ssd/model_repository/nozzlenet-v2/V253/ssd_resnet18_epoch_060-nozzlenet-batch-size-1.plan
+infer-dims=3;480;480
+uff-input-order=0
+uff-input-blob-name=input_1
+batch-size=1
+network-mode=0
+num-detected-classes=6
+interval=0
+gie-unique-id=1
+input-tensor-from-meta=0
+output-blob-names=scores;boxes
+parse-bbox-func-name=NvDsInferParseCustomResnet
+custom-lib-path=/opt/nvidia/deepstream/deepstream/lib/libnvds_infercustomparser.so
+
+[class-attrs-all]
+pre-cluster-threshold=0.4
+group-threshold=1
+eps=0.2
+roi-top-offset=0
+roi-bottom-offset=0
+detected-min-w=10
+detected-min-h=10
+detected-max-w=2000
+detected-max-h=2000
