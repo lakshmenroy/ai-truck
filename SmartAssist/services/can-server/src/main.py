@@ -33,6 +33,7 @@ import csv
 import pandas as pd
 import numpy as np
 
+from pipeline.utils.paths import OUTPUT_ROOT
 
 class CANServer:
     """
@@ -136,7 +137,7 @@ class CANServer:
         self.current_override_state = 0
         
         # Logging
-        self.log_directory = '/mnt/ssd/logs/can_logs'
+        self.log_directory = os.path.join(OUTPUT_ROOT, 'can_logs')
         self.csv_file = None
         self.csv_writer = None
         
@@ -846,7 +847,8 @@ def main():
     
     # Load DBC databases (optional)
     try:
-        server.db0 = cantools.database.load_file('/path/to/telematic.dbc')
+        dbc_file = get_dbc_path('TMS_V1_45_20251110.dbc')
+        server.db0 = cantools.database.load_file(dbc_file)
         print('DBC database loaded for CAN0')
     except Exception as e:
         print(f'Warning: Could not load DBC: {e}')

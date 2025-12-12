@@ -59,6 +59,9 @@ CSI_SRC = os.path.join(CSI_ROOT, "src")
 CSI_WEIGHTS = os.path.join(CSI_ROOT, "weights/v1.0.0")
 CSI_DEEPSTREAM_CONFIGS = os.path.join(CSI_ROOT, "deepstream_configs")
 
+CSI_ROAD_CONFIG = os.path.join(CSI_DEEPSTREAM_CONFIGS, "road_config.txt")
+CSI_GARBAGE_CONFIG = os.path.join(CSI_DEEPSTREAM_CONFIGS, "garbage_config.txt")
+
 # Nozzlenet model
 NOZZLENET_ROOT = os.path.join(MODELS_ROOT, "nozzlenet")
 NOZZLENET_SRC = os.path.join(NOZZLENET_ROOT, "src")
@@ -76,7 +79,7 @@ VIDEO_OUTPUT_DIR = os.path.join(OUTPUT_ROOT, "video")
 # Tools directory
 TOOLS_DIR = os.path.join(REPO_ROOT, "tools")
 
-
+CAN_LOG_DIR = os.path.join(OUTPUT_ROOT, "can_logs")
 def get_model_path(model_name, version, filename):
     """
     Get path to model weight file

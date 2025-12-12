@@ -11,7 +11,7 @@ VERIFIED: Complete bin structure with all elements and properties
 import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
-
+from pipeline.utils.paths import get_deepstream_config_path
 # Import helper functions from pipeline module
 try:
     from ...pipeline.elements import make_element
@@ -143,8 +143,9 @@ def get_nozzlenet_config_defaults():
     These are the expected config file paths and settings
     """
     return {
-        'preprocess_config': '/mnt/ssd/csi_pipeline/config/ds_config/config_preprocess.txt',
-        'inference_config': '/mnt/ssd/csi_pipeline/config/ds_config/infer_config.txt',
+        'preprocess_config': get_deepstream_config_path('nozzlenet', 'config_preprocess.txt'),
+        'inference_config': get_deepstream_config_path('nozzlenet', 'infer_config.txt'),
+    
         'unique_id': 1,
         'output_resolution': (960, 540),
         'network_input_shape': '1;3;480;480',

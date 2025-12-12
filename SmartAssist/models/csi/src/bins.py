@@ -16,6 +16,7 @@ from gi.repository import Gst
 from .probes import compute_csi_buffer_probe
 from pipeline.pipeline import make_element
 from pipeline.pipeline import link_static_srcpad_pad_to_request_sinkpad
+from pipeline.utils.paths import get_deepstream_config_path
 
 def create_csiprobebin(app_context, flip_method):
     """
@@ -98,9 +99,9 @@ def create_csiprobebin(app_context, flip_method):
     nvstreammux_garbage_pgie.set_property('batched-push-timeout', 33000000)
     
     # Configure inference engines - get paths from app_context
-    # NOTE: These will be set from pipeline config, hardcoded here as fallback
-    road_config_path = '/mnt/ssd/csi_pipeline/config/ds_config/road_config.txt'
-    garbage_config_path = '/mnt/ssd/csi_pipeline/config/ds_config/garbage_config.txt'
+
+    road_config_path = get_deepstream_config_path('csi', 'road_config.txt')
+    garbage_config_path = get_deepstream_config_path('csi', 'garbage_config.txt')
     
     # Try to get from app_context config_paths
     config_paths_dict = app_context.get_value('config_paths')
