@@ -11,6 +11,7 @@ This script:
 
 EXTRACTED FROM: pipeline/pipeline_w_logging.py
 MODULARIZED: Imports from organized module structure
+FIXED: Import statements corrected for refactored module structure
 """
 import sys
 import os
@@ -24,25 +25,31 @@ import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst, GObject
 
-# Import SmartAssist modules
+# Import SmartAssist core modules
 from context import Config, AppContext, GETFPS
 from detection_categories import DETECTION_CATEGORIES
 
 # Pipeline modules
 from pipeline.builder import build_pipeline, bus_call
 
-# Camera modules
-from camera.manager import initialize_cameras
+# Camera modules - FIXED: Import CameraManager class
+from camera.manager import CameraManager
 
-# CAN modules
+# CAN modules - FIXED: Only import CANClient from can
 from can.client import CANClient
-from can.state_machine import SmartStateMachine
 
-# Monitoring modules
+# State Machine - FIXED: Import from models.nozzlenet
+# Add models directory to Python path for import
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_DIR = os.path.join(CURRENT_DIR, '..', '..', 'models')
+sys.path.insert(0, MODELS_DIR)
+from nozzlenet.src.state_machine import SmartStateMachine
+
+# Monitoring modules - FIXED: Use correct function names
 from monitoring.threads import (
-    overlay_parts_fetcher,
-    override_monitoring,
-    unix_socket_server
+    start_fps_overlay_thread,
+    start_manual_override_thread,
+    start_socket_thread
 )
 
 # Utils
@@ -69,270 +76,176 @@ def setup_app_context():
     # Set basic values
     app_context.set_value('main_process_id', os.getpid())
     app_context.set_value('shutdown_initiated_by_user_process', False)
-    app_context.set_value('SSWP_RUN_MODE', os.environ.get('SSWP_RUN_MODE', 'STANDALONE'))
+    app_context.set_value('SSWP_RUN_MODE', os.environ.get('SSWP_RUN_MODE', 'SYSTEMD_NOTIFY_SERVICE'))
+    app_context.set_value('last_notificationsent_to_systemd', '')
     
-    # Load configurations
+    # Create Config and AppContext objects
     config = Config()
-    app_context_v2 = AppContext(config)
-    app_context_v2.initialise_logging()
+    app_context_v2 = AppContext()
+    fps = GETFPS(0)
     
+    app_context.set_value('config', config)
     app_context.set_value('app_context_v2', app_context_v2)
-    app_context.set_value('init_config', config.config)
+    app_context.set_value('fps', fps)
     
+    # Initialize logger
     logger = app_context_v2.logger
-    logger.info('SmartAssist Pipeline Starting...')
-    logger.info(f'Process ID: {os.getpid()}')
-    logger.info(f'Run mode: {app_context.get_value("SSWP_RUN_MODE")}')
-    
-    # Load pipeline configuration
-    import yaml
-    with open('config/pipeline_config.yaml', 'r') as f:
-        pipeline_config = yaml.safe_load(f)
-    
-    app_context.set_value('config_paths', pipeline_config.get('ds_configs', {}))
-    app_context.set_value('enable_csi', pipeline_config.get('enable_csi', True))
-    
-    # Load logging configuration
-    logging_config = Configuration()
-    app_context.set_value('serial_number', logging_config.get_serial_number())
-    app_context.set_value('log_duration', logging_config.get_log_duration())
-    app_context.set_value('camera_columns', logging_config.get_camera_columns())
-    app_context.set_value('log_directory', logging_config.get_directory())
-    
-    # Set file timestamps
-    file_start_time = datetime.now().strftime('%Y_%m_%d_%H%M')
-    app_context.set_value('file_start_time', file_start_time)
-    
-    # Create FPS counters
-    nn_fps_counter = GETFPS(time_window=120)
-    stream_fps_counter = GETFPS(time_window=120)
-    app_context.set_value('nn_fps_counter', nn_fps_counter)
-    app_context.set_value('stream_fps_counter', stream_fps_counter)
-    
-    # Initialize state machine
-    state_machine = SmartStateMachine()
-    app_context.set_value('state_machine', state_machine)
-    
-    # Detection categories for filtering
-    search_item_list = [
-        DETECTION_CATEGORIES.PGIE_CLASS_ID_NOZZLE_CLEAR.value,
-        DETECTION_CATEGORIES.PGIE_CLASS_ID_NOZZLE_BLOCKED.value,
-        DETECTION_CATEGORIES.PGIE_CLASS_ID_CHECK_NOZZLE.value,
-        DETECTION_CATEGORIES.PGIE_CLASS_ID_GRAVEL.value,
-        DETECTION_CATEGORIES.PGIE_CLASS_ID_ACTION_OBJECT.value
-    ]
-    app_context.set_value('search_item_list', search_item_list)
-    
-    # Overlay parts for OSD display
-    overlay_parts = {
-        'sm_nozzle_state': 'N/A',
-        'sm_fan_speed': 'N/A',
-        'sm_current_status': 'N/A',
-        'sm_current_state': 'N/A',
-        'sm_time_difference': 0.0,
-        'sm_ao_status': 'N/A',
-        'sm_ao_difference': 0.0,
-        's1_pm10': 0,
-        's2_pm10': 'N/A',
-        's3_pm10': 'N/A',
-        's4_pm10': 'N/A',
-        's5_pm10': 'N/A'
-    }
-    app_context.set_value('overlay_parts', overlay_parts)
+    logger.info('Application context initialized')
     
     return app_context
 
 
-def setup_signal_handler(app_context, loop, ctrl_c_count):
+def signal_handler(sig, frame, loop, app_context):
     """
-    Set up SIGINT (Ctrl+C) signal handler
+    Handle shutdown signals (SIGINT, SIGTERM)
     
-    Args:
-        app_context: Application context
-        loop: GObject main loop
-        ctrl_c_count: List with single element for counting Ctrl+C presses
+    :param sig: Signal number
+    :param frame: Current stack frame
+    :param loop: GLib main loop
+    :param app_context: Application context
+    """
+    logger = app_context.get_value('app_context_v2').logger
+    logger.info(f'Received signal {sig}, initiating shutdown...')
+    
+    # Set shutdown flag
+    app_context.set_value('shutdown_initiated_by_user_process', True)
+    
+    # Quit main loop
+    loop.quit()
+
+
+def initialize_cameras_wrapper(app_context):
+    """
+    Wrapper function to initialize cameras using CameraManager
+    
+    :param app_context: Application context
+    :return: Initialization status (0 = success, -1 = failure)
     """
     logger = app_context.get_value('app_context_v2').logger
     
-    def signal_handler(sig, frame):
-        logger.info('=' * 60)
-        logger.info('CTRL+C RECEIVED')
-        logger.info('=' * 60)
+    try:
+        logger.info('Initializing cameras...')
         
-        pipeline = app_context.get_value('pipeline')
-        ctrl_c_count[0] += 1
+        # Create camera manager
+        camera_manager = CameraManager(app_context)
         
-        if ctrl_c_count[0] == 1:
-            # First Ctrl+C: Graceful shutdown
-            logger.info('Initiating graceful shutdown...')
-            
-            # Stop CAN client
-            can_client = app_context.get_value('can_client')
-            if can_client:
-                logger.debug('Stopping CAN client...')
-                can_client.stop_logging()
-                can_client.disconnect()
-            
-            # Stop monitoring threads
-            logger.debug('Stopping monitoring threads...')
-            # Threads will be joined at cleanup
-            
-            # Generate DOT file
-            timestamp = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-            logger.debug(f'Generating pipeline DOT file: python_pipeline_{timestamp}.dot')
-            Gst.debug_bin_to_dot_file(pipeline, Gst.DebugGraphDetails.ALL, f'python_pipeline_{timestamp}')
-            
-            # Create symlink to latest
-            dot_dir = os.environ.get('GST_DEBUG_DUMP_DOT_DIR', '/tmp')
-            os.system(f"ln -sf {dot_dir}/python_pipeline_{timestamp}.dot {dot_dir}/python_pipeline_latest.dot")
-            
-            # Send EOS to pipeline
-            time.sleep(0.5)
-            app_context.set_value('shutdown_initiated_by_user_process', True)
-            logger.info('Sending EOS event to pipeline...')
-            pipeline.send_event(Gst.Event.new_eos())
-            
-            # Generate post-EOS DOT file
-            Gst.debug_bin_to_dot_file(pipeline, Gst.DebugGraphDetails.ALL, f'python_pipeline_post_EOS_{timestamp}')
+        # Initialize cameras
+        result = camera_manager.initialize()
         
-        elif ctrl_c_count[0] >= 2:
-            # Second Ctrl+C: Force shutdown
-            logger.warning('CTRL+C pressed twice - forcing immediate shutdown!')
-            notify_systemd('STOPPING=1')
-            
-            if pipeline.set_state(Gst.State.NULL) == Gst.StateChangeReturn.FAILURE:
-                logger.error('Failed to stop pipeline - killing process')
-                os.kill(os.getpid(), signal.SIGKILL)
-            else:
-                logger.info('Pipeline stopped successfully')
-                loop.quit()
-    
-    signal.signal(signal.SIGINT, signal_handler)
+        if result == 0:
+            logger.info('Camera initialization successful')
+        else:
+            logger.error('Camera initialization failed')
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f'Error initializing cameras: {e}')
+        return -1
 
 
 def main():
     """
-    Main entry point
+    Main entry point for SmartAssist pipeline
+    
+    Returns:
+        int: Exit code (0 = success, 1 = error)
     """
     # Initialize GStreamer
     Gst.init(None)
-    GObject.threads_init()
     
-    # Set up systemd notification
-    notify_systemd('STATUS=Initializing SmartAssist Pipeline')
-    
-    # Initialize app context
+    # Setup application context
     app_context = setup_app_context()
     logger = app_context.get_value('app_context_v2').logger
     
-    # Make app_context available globally for bus_call
-    import __main__
-    __main__.app_context = app_context
+    logger.info('=' * 60)
+    logger.info('SmartAssist Pipeline Starting')
+    logger.info('=' * 60)
+    
+    # Load camera initialization status
+    notify_systemd('STATUS=Loading camera init status...')
+    init_status = load_latest_init_status('bucher-d3-camera-init', app_context)
+    if init_status != 0:
+        logger.warning('Failed to load camera init status, continuing anyway')
     
     # Initialize cameras
-    logger.info('Initializing cameras...')
-    notify_systemd('STATUS=Initializing cameras')
+    notify_systemd('STATUS=Initializing cameras...')
+    if initialize_cameras_wrapper(app_context) != 0:
+        logger.error('Camera initialization failed')
+        return 1
     
-    try:
-        # Load camera init status
-        init_status = load_latest_init_status('camera_init_results', app_context)
-        if init_status:
-            logger.info(f'Loaded camera initialization status: {len(init_status.get("cameras", []))} cameras')
-            app_context.set_value('init_config', init_status)
-        else:
-            # Run camera initialization
-            from camera.manager import initialize_cameras
-            init_result = initialize_cameras(app_context)
-            if init_result != 0:
-                logger.error('Camera initialization failed!')
-                return -1
-    except Exception as e:
-        logger.error(f'Error during camera initialization: {e}')
-        return -1
+    # Load configuration
+    notify_systemd('STATUS=Loading configuration...')
+    config = Configuration()
     
     # Initialize CAN client
-    logger.info('Initializing CAN client...')
-    try:
-        can_client = CANClient()
-        app_context.set_value('can_client', can_client)
-    except Exception as e:
-        logger.warning(f'Failed to initialize CAN client: {e}')
-        logger.warning('Continuing without CAN communication')
-        app_context.set_value('can_client', None)
+    notify_systemd('STATUS=Connecting to CAN server...')
+    can_client = CANClient(client_name='smartassist-pipeline')
+    if not can_client.connect():
+        logger.error('Failed to connect to CAN server')
+        return 1
     
-    # Build pipeline
-    logger.info('Building GStreamer pipeline...')
-    notify_systemd('STATUS=Building pipeline')
+    # Initialize state machine
+    state_machine = SmartStateMachine()
+    app_context.set_value('state_machine', state_machine)
+    app_context.set_value('can_client', can_client)
     
-    result = build_pipeline(app_context)
-    if result != 0:
-        logger.error('Failed to build pipeline!')
-        return -1
+    # Build GStreamer pipeline
+    notify_systemd('STATUS=Building pipeline...')
+    pipeline_result = build_pipeline(app_context)
+    if pipeline_result != 0:
+        logger.error('Failed to build pipeline')
+        return 1
     
     pipeline = app_context.get_value('pipeline')
-    loop = app_context.get_value('main_loop')
     
-    # Set up signal handler
-    ctrl_c_count = [0]
-    setup_signal_handler(app_context, loop, ctrl_c_count)
+    # Create GLib main loop
+    loop = GObject.MainLoop()
+    app_context.set_value('loop', loop)
+    
+    # Setup signal handlers
+    signal.signal(signal.SIGINT, lambda s, f: signal_handler(s, f, loop, app_context))
+    signal.signal(signal.SIGTERM, lambda s, f: signal_handler(s, f, loop, app_context))
     
     # Start monitoring threads
-    logger.info('Starting monitoring threads...')
+    notify_systemd('STATUS=Starting monitoring threads...')
     
-    overlay_thread = threading.Thread(
-        target=overlay_parts_fetcher,
+    # Start FPS overlay thread
+    fps_thread = threading.Thread(
+        target=start_fps_overlay_thread,
         args=(app_context,),
         daemon=True
     )
-    overlay_thread.start()
-    app_context.set_value('overlay_thread', overlay_thread)
+    fps_thread.start()
     
-    monitoring_thread = threading.Thread(
-        target=override_monitoring,
+    # Start manual override thread
+    override_thread = threading.Thread(
+        target=start_manual_override_thread,
         args=(app_context,),
         daemon=True
     )
-    monitoring_thread.start()
-    app_context.set_value('monitoring_thread', monitoring_thread)
+    override_thread.start()
     
-    # Start Unix socket server if in systemd mode
-    if app_context.get_value('SSWP_RUN_MODE') == 'SYSTEMD_NOTIFY_SERVICE':
-        logger.info('Starting Unix socket server...')
-        stop_event = threading.Event()
-        socket_path = '/tmp/smartassist_pipeline.sock'
-        
-        server_thread = threading.Thread(
-            target=unix_socket_server,
-            args=(socket_path, stop_event, app_context),
-            daemon=True
-        )
-        server_thread.start()
-        app_context.set_value('server_thread', server_thread)
-        app_context.set_value('server_stop_event', stop_event)
+    # Start socket server thread
+    socket_thread = threading.Thread(
+        target=start_socket_thread,
+        args=(app_context,),
+        daemon=True
+    )
+    socket_thread.start()
     
-    # Set pipeline to PLAYING
-    logger.info('Starting pipeline...')
-    notify_systemd('STATUS=Starting pipeline')
-    
+    # Start pipeline
+    notify_systemd('STATUS=Starting pipeline...')
+    logger.info('Setting pipeline to PLAYING state...')
     ret = pipeline.set_state(Gst.State.PLAYING)
     if ret == Gst.StateChangeReturn.FAILURE:
-        logger.error('Failed to set pipeline to PLAYING state')
-        return -1
-    
-    # Connect CAN client
-    can_client = app_context.get_value('can_client')
-    if can_client:
-        logger.info('Connecting to CAN bus...')
-        can_client.connect()
-        if can_client.connected:
-            logger.info('CAN client connected - starting logging')
-            can_client.start_logging()
-        else:
-            logger.warning('Failed to connect to CAN bus - continuing without CAN')
+        logger.error('Unable to set pipeline to PLAYING state')
+        return 1
     
     # Notify systemd that we're ready
     notify_systemd('READY=1')
     notify_systemd('STATUS=Pipeline running')
+    
     logger.info('=' * 60)
     logger.info('SmartAssist Pipeline is RUNNING')
     logger.info('=' * 60)
