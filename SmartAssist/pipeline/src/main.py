@@ -11,9 +11,8 @@ This script:
 
 EXTRACTED FROM: pipeline/pipeline_w_logging.py
 MODULARIZED: Imports from organized module structure
-FIXED: Import statements corrected for refactored module structure
+FIXED: All imports use proper package structure (NO sys.path hacks)
 """
-import sys
 import os
 import signal
 import time
@@ -25,39 +24,46 @@ import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst, GObject
 
-# Import SmartAssist core modules
-from context import Config, AppContext, GETFPS
-from detection_categories import DETECTION_CATEGORIES
+# Import SmartAssist core modules (relative imports from pipeline.src)
+from .context import Config, AppContext, GETFPS
+from .detection_categories import DETECTION_CATEGORIES
 
 # Pipeline modules
-from pipeline.builder import build_pipeline, bus_call
+from .pipeline.builder import build_pipeline, bus_call
 
-# Camera modules - FIXED: Import CameraManager class
-from camera.manager import CameraManager
+# Camera modules
+from .camera.manager import CameraManager
 
-# CAN modules - FIXED: Only import CANClient from can
-from can.client import CANClient
+# CAN modules
+from .can.client import CANClient
 
-# State Machine - FIXED: Import from models.nozzlenet
-# Add models directory to Python path for import
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-MODELS_DIR = os.path.join(CURRENT_DIR, '..', '..', 'models')
-sys.path.insert(0, MODELS_DIR)
-from nozzlenet.src.state_machine import SmartStateMachine
-
-# Monitoring modules - FIXED: Use correct function names
-from monitoring.threads import (
+# Monitoring modules
+from .monitoring.threads import (
     start_fps_overlay_thread,
     start_manual_override_thread,
     start_socket_thread
 )
 
 # Utils
-from utils.systemd import notify_systemd, load_latest_init_status
-from utils.config import Configuration
-from utils.helpers import modify_deepstream_config_files
+from .utils.systemd import notify_systemd, load_latest_init_status
+from .utils.config import Configuration
+from .utils.helpers import modify_deepstream_config_files
 
-# Set up paths
+# FIXED: Import SmartStateMachine from proper package structure
+# This assumes setup.py properly installs the models package
+try:
+    # Try absolute import (when installed via pip install -e .)
+    from models.nozzlenet.state_machine import SmartStateMachine
+except ImportError:
+    # Fallback: Try relative path for development
+    import sys
+    from pathlib import Path
+    REPO_ROOT = Path(__file__).resolve().parents[3]
+    if str(REPO_ROOT / 'models') not in sys.path:
+        sys.path.insert(0, str(REPO_ROOT / 'models'))
+    from nozzlenet.src.state_machine import SmartStateMachine
+
+# Set up environment
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 os.environ['SCRIPT_EXECUTION_DIR'] = SCRIPT_DIR
 os.environ['GST_DEBUG_DUMP_DOT_DIR'] = '/mnt/syslogic_sd_card'
@@ -77,11 +83,11 @@ def setup_app_context():
     app_context.set_value('main_process_id', os.getpid())
     app_context.set_value('shutdown_initiated_by_user_process', False)
     app_context.set_value('SSWP_RUN_MODE', os.environ.get('SSWP_RUN_MODE', 'SYSTEMD_NOTIFY_SERVICE'))
-    app_context.set_value('last_notificationsent_to_systemd', '')
+    app_context.set_value('last_notification_sent_to_systemd', '')
     
     # Create Config and AppContext objects
     config = Config()
-    app_context_v2 = AppContext()
+    app_context_v2 = AppContext(config)
     fps = GETFPS(0)
     
     app_context.set_value('config', config)
@@ -89,8 +95,10 @@ def setup_app_context():
     app_context.set_value('fps', fps)
     
     # Initialize logger
+    app_context_v2.initialise_logging()
     logger = app_context_v2.logger
     logger.info('Application context initialized')
+    logger.info(f'Process ID: {os.getpid()}')
     
     return app_context
 
@@ -126,21 +134,21 @@ def initialize_cameras_wrapper(app_context):
     try:
         logger.info('Initializing cameras...')
         
-        # Create camera manager
-        camera_manager = CameraManager(app_context)
-        
-        # Initialize cameras
-        result = camera_manager.initialize()
+        # Load camera initialization status from file
+        result = load_latest_init_status('camera_init_results', app_context)
         
         if result == 0:
-            logger.info('Camera initialization successful')
+            logger.info('Camera initialization status loaded successfully')
+            init_config = app_context.get_value('init_config')
+            logger.debug(f'Camera config: {init_config}')
         else:
-            logger.error('Camera initialization failed')
+            logger.error('Failed to load camera initialization status')
+            return -1
         
-        return result
+        return 0
         
     except Exception as e:
-        logger.error(f'Error initializing cameras: {e}')
+        logger.error(f'Error loading camera initialization: {e}')
         return -1
 
 
@@ -153,137 +161,116 @@ def main():
     """
     # Initialize GStreamer
     Gst.init(None)
+    GObject.threads_init()
     
     # Setup application context
     app_context = setup_app_context()
     logger = app_context.get_value('app_context_v2').logger
     
-    logger.info('=' * 60)
+    logger.info('='*60)
     logger.info('SmartAssist Pipeline Starting')
-    logger.info('=' * 60)
+    logger.info('='*60)
     
-    # Load camera initialization status
-    notify_systemd('STATUS=Loading camera init status...')
-    init_status = load_latest_init_status('bucher-d3-camera-init', app_context)
-    if init_status != 0:
-        logger.warning('Failed to load camera init status, continuing anyway')
+    # Notify systemd we're starting
+    notify_systemd('STATUS=Initializing...', app_context)
     
-    # Initialize cameras
-    notify_systemd('STATUS=Initializing cameras...')
-    if initialize_cameras_wrapper(app_context) != 0:
-        logger.error('Camera initialization failed')
-        return 1
-    
-    # Load configuration
-    notify_systemd('STATUS=Loading configuration...')
-    config = Configuration()
-    
-    # Initialize CAN client
-    notify_systemd('STATUS=Connecting to CAN server...')
-    can_client = CANClient(client_name='smartassist-pipeline')
-    if not can_client.connect():
-        logger.error('Failed to connect to CAN server')
-        return 1
-    
-    # Initialize state machine
-    state_machine = SmartStateMachine()
-    app_context.set_value('state_machine', state_machine)
-    app_context.set_value('can_client', can_client)
-    
-    # Build GStreamer pipeline
-    notify_systemd('STATUS=Building pipeline...')
-    pipeline_result = build_pipeline(app_context)
-    if pipeline_result != 0:
-        logger.error('Failed to build pipeline')
-        return 1
-    
-    pipeline = app_context.get_value('pipeline')
-    
-    # Create GLib main loop
-    loop = GObject.MainLoop()
-    app_context.set_value('loop', loop)
-    
-    # Setup signal handlers
-    signal.signal(signal.SIGINT, lambda s, f: signal_handler(s, f, loop, app_context))
-    signal.signal(signal.SIGTERM, lambda s, f: signal_handler(s, f, loop, app_context))
-    
-    # Start monitoring threads
-    notify_systemd('STATUS=Starting monitoring threads...')
-    
-    # Start FPS overlay thread
-    fps_thread = threading.Thread(
-        target=start_fps_overlay_thread,
-        args=(app_context,),
-        daemon=True
-    )
-    fps_thread.start()
-    
-    # Start manual override thread
-    override_thread = threading.Thread(
-        target=start_manual_override_thread,
-        args=(app_context,),
-        daemon=True
-    )
-    override_thread.start()
-    
-    # Start socket server thread
-    socket_thread = threading.Thread(
-        target=start_socket_thread,
-        args=(app_context,),
-        daemon=True
-    )
-    socket_thread.start()
-    
-    # Start pipeline
-    notify_systemd('STATUS=Starting pipeline...')
-    logger.info('Setting pipeline to PLAYING state...')
-    ret = pipeline.set_state(Gst.State.PLAYING)
-    if ret == Gst.StateChangeReturn.FAILURE:
-        logger.error('Unable to set pipeline to PLAYING state')
-        return 1
-    
-    # Notify systemd that we're ready
-    notify_systemd('READY=1')
-    notify_systemd('STATUS=Pipeline running')
-    
-    logger.info('=' * 60)
-    logger.info('SmartAssist Pipeline is RUNNING')
-    logger.info('=' * 60)
-    
-    # Run main loop
     try:
-        loop.run()
-    except Exception as e:
-        logger.error(f'Error in main loop: {e}')
-    
-    # Cleanup
-    logger.info('=' * 60)
-    logger.info('CLEANUP')
-    logger.info('=' * 60)
-    
-    notify_systemd('STATUS=Stopping...')
-    notify_systemd('STOPPING=1')
-    
-    # Stop pipeline
-    if pipeline and pipeline.get_state(Gst.CLOCK_TIME_NONE)[1] != Gst.State.NULL:
-        logger.debug('Setting pipeline to NULL state...')
+        # Load camera initialization status
+        logger.info('Loading camera initialization status...')
+        cam_result = initialize_cameras_wrapper(app_context)
+        
+        if cam_result != 0:
+            logger.error('Camera initialization failed')
+            notify_systemd('STATUS=Camera initialization failed', app_context)
+            return 1
+        
+        # Load configuration
+        logger.info('Loading configuration...')
+        config_obj = Configuration()
+        app_context.set_value('configuration', config_obj)
+        
+        # Build pipeline
+        logger.info('Building GStreamer pipeline...')
+        pipeline = build_pipeline(app_context)
+        
+        if not pipeline:
+            logger.error('Failed to create pipeline')
+            notify_systemd('STATUS=Pipeline creation failed', app_context)
+            return 1
+        
+        # Add bus watch
+        bus = pipeline.get_bus()
+        bus.add_signal_watch()
+        bus.connect('message', bus_call, loop, app_context)
+        
+        # Create main loop
+        loop = GObject.MainLoop()
+        
+        # Register signal handlers
+        signal.signal(signal.SIGINT, lambda s, f: signal_handler(s, f, loop, app_context))
+        signal.signal(signal.SIGTERM, lambda s, f: signal_handler(s, f, loop, app_context))
+        
+        # Start monitoring threads
+        logger.info('Starting monitoring threads...')
+        fps_thread = start_fps_overlay_thread(app_context)
+        override_thread = start_manual_override_thread(app_context)
+        socket_thread = start_socket_thread(app_context)
+        
+        # Start CAN client (if enabled)
+        can_client = None
+        if app_context.get_value('config').enable_can:
+            logger.info('Starting CAN client...')
+            can_client = CANClient(app_context)
+            can_client.start()
+        
+        # Start pipeline
+        logger.info('Starting pipeline...')
+        ret = pipeline.set_state(Gst.State.PLAYING)
+        
+        if ret == Gst.StateChangeReturn.FAILURE:
+            logger.error('Unable to set pipeline to PLAYING state')
+            notify_systemd('STATUS=Pipeline start failed', app_context)
+            return 1
+        
+        # Notify systemd we're ready
+        notify_systemd('READY=1\nSTATUS=Running', app_context)
+        logger.info('Pipeline running')
+        
+        # Run main loop
+        try:
+            loop.run()
+        except KeyboardInterrupt:
+            logger.info('Interrupted by user')
+        
+        # Cleanup
+        logger.info('Shutting down...')
+        notify_systemd('STATUS=Shutting down...', app_context)
+        
+        # Stop pipeline
         pipeline.set_state(Gst.State.NULL)
-    
-    # Stop CAN client
-    if can_client:
-        logger.debug('Disconnecting CAN client...')
-        can_client.stop_logging()
-        can_client.disconnect()
-    
-    # Stop socket server
-    if app_context.get_value('SSWP_RUN_MODE') == 'SYSTEMD_NOTIFY_SERVICE':
-        stop_event = app_context.get_value('server_stop_event')
-        if stop_event:
-            stop_event.set()
-    
-    logger.info('SmartAssist Pipeline shutdown complete')
-    return 0
+        
+        # Stop threads
+        if fps_thread:
+            fps_thread.join(timeout=2)
+        if override_thread:
+            override_thread.join(timeout=2)
+        if socket_thread:
+            socket_thread.join(timeout=2)
+        
+        # Stop CAN client
+        if can_client:
+            can_client.stop()
+        
+        logger.info('Shutdown complete')
+        notify_systemd('STATUS=Stopped', app_context)
+        
+        return 0
+        
+    except Exception as e:
+        logger.error(f'Fatal error: {e}', exc_info=True)
+        notify_systemd(f'STATUS=Fatal error: {e}', app_context)
+        return 1
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

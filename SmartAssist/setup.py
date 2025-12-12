@@ -1,19 +1,29 @@
 """
 SmartAssist Setup Configuration
 Enables pip installation: pip install -e .
+
+FIXED: Proper package structure that allows imports like:
+    from pipeline.utils import paths
+    from models.nozzlenet.state_machine import SmartStateMachine
 """
-from setuptools import setup, find_packages
+from setuptools import setup
 import os
 
 # Read README for long description
 def read_file(filename):
-    with open(filename, 'r', encoding='utf-8') as f:
-        return f.read()
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            return f.read()
+    except:
+        return ''
 
 # Read requirements
 def read_requirements(filename):
-    with open(filename, 'r') as f:
-        return [line.strip() for line in f if line.strip() and not line.startswith('#')]
+    try:
+        with open(filename, 'r') as f:
+            return [line.strip() for line in f if line.strip() and not line.startswith('#')]
+    except:
+        return []
 
 setup(
     name='smartassist',
@@ -25,17 +35,37 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/your-org/SmartAssist',
     
-    # Package structure
-    packages=find_packages(where='pipeline/src') + 
-             find_packages(where='models/csi/src') +
-             find_packages(where='models/nozzlenet/src') +
-             find_packages(where='services/can-server/src'),
+    # FIXED: Explicit package list with proper structure
+    packages=[
+        # Pipeline packages
+        'pipeline',
+        'pipeline.utils',
+        'pipeline.camera',
+        'pipeline.can',
+        'pipeline.monitoring',
+        'pipeline.pipeline',
+        # Model packages  
+        'models',
+        'models.csi',
+        'models.nozzlenet',
+        # Service packages
+        'services',
+        'services.can_server',
+    ],
     
+    # FIXED: Proper package directory mapping
     package_dir={
-        '': 'pipeline/src',
+        'pipeline': 'pipeline/src',
+        'pipeline.utils': 'pipeline/src/utils',
+        'pipeline.camera': 'pipeline/src/camera',
+        'pipeline.can': 'pipeline/src/can',
+        'pipeline.monitoring': 'pipeline/src/monitoring',
+        'pipeline.pipeline': 'pipeline/src/pipeline',
+        'models': 'models',
         'models.csi': 'models/csi/src',
         'models.nozzlenet': 'models/nozzlenet/src',
-        'services.can_server': 'services/can-server/src'
+        'services': 'services',
+        'services.can_server': 'services/can-server/src',
     },
     
     # Dependencies
@@ -55,7 +85,7 @@ setup(
     # Entry points
     entry_points={
         'console_scripts': [
-            'smartassist-pipeline=main:main',
+            'smartassist-pipeline=pipeline.main:main',
             'smartassist-can-server=services.can_server.main:main',
         ],
     },
@@ -77,7 +107,9 @@ setup(
     # Include additional files
     include_package_data=True,
     package_data={
-        '': ['*.yaml', '*.json', '*.txt', '*.md'],
+        'pipeline': ['*.yaml', '*.json', '*.txt'],
+        'models.csi': ['*.yaml', '*.txt'],
+        'models.nozzlenet': ['*.yaml', '*.txt'],
     },
     
     # Zip safety
