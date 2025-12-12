@@ -13,10 +13,9 @@ import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
 
-from pipeline.pipeline.elements import make_element
-from pipeline.pipeline.linking import link_static_srcpad_pad_to_request_sinkpad
 from .probes import compute_csi_buffer_probe
-
+from pipeline.pipeline import make_element
+from pipeline.pipeline import link_static_srcpad_pad_to_request_sinkpad
 
 def create_csiprobebin(app_context, flip_method):
     """
