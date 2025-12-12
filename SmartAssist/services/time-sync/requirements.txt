@@ -1,0 +1,7 @@
+# SmartAssist Time Sync Service Dependencies
+
+# CAN bus communication
+python-can>=4.0.0
+
+# CAN DBC file parsing
+cantools>=37.0.0

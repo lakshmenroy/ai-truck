@@ -1,0 +1,38 @@
+# SmartAssist Health Monitor Service
+# Checks status of all smartassist-* services periodically
+#
+# This service is triggered by smartassist-health-monitor.timer every 30 seconds
+#
+# Install:
+#   sudo cp smartassist-health-monitor.service /etc/systemd/system/
+#   sudo cp smartassist-health-monitor.timer /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-health-monitor.timer
+#   sudo systemctl start smartassist-health-monitor.timer
+#
+# Check status:
+#   systemctl status smartassist-health-monitor.timer
+#   journalctl -u smartassist-health-monitor -f
+#   cat /var/lib/smartassist/service_status.json
+
+[Unit]
+Description=SmartAssist Health Monitor
+Documentation=https://github.com/your-org/SmartAssist
+After=multi-user.target
+
+[Service]
+Type=oneshot
+# Execute health check script
+ExecStart=/opt/smartassist/services/health-monitor/src/check_services.sh
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-health
+
+# Security
+PrivateTmp=no
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

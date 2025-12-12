@@ -1,0 +1,37 @@
+# SmartAssist GPIO Export Service
+# Exports GPIO pins to userspace for IGNITION signal monitoring
+# This is a oneshot service that runs at boot and remains active
+#
+# Install:
+#   sudo cp smartassist-gpio-export.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-gpio-export
+#   sudo systemctl start smartassist-gpio-export
+#
+# Check status:
+#   systemctl status smartassist-gpio-export
+#   gpioget $(gpiofind PH.01)  # Should work without error
+
+[Unit]
+Description=SmartAssist GPIO Export for IGNITION Signal
+Documentation=https://github.com/your-org/SmartAssist
+After=sysinit.target
+Before=smartassist-gpio-monitor.service
+
+[Service]
+Type=oneshot
+# Export GPIO PH.01 (IGNITION signal from vehicle)
+# If gpioget succeeds, GPIO is accessible
+ExecStart=/bin/bash -c 'gpioget $(gpiofind PH.01) >/dev/null 2>&1 || exit 1'
+RemainAfterExit=yes
+
+# Restart policy (shouldn't be needed for oneshot, but good practice)
+Restart=on-failure
+RestartSec=5
+
+# Security
+PrivateTmp=no
+NoNewPrivileges=false
+
+[Install]
+WantedBy=multi-user.target

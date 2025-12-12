@@ -1,0 +1,42 @@
+# SmartAssist GPIO IGNITION Monitor Timer
+# Triggers GPIO monitoring every 5 seconds
+#
+# Install:
+#   sudo cp smartassist-gpio-monitor.timer /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-gpio-monitor.timer
+#   sudo systemctl start smartassist-gpio-monitor.timer
+#
+# Check status:
+#   systemctl status smartassist-gpio-monitor.timer
+#   systemctl list-timers smartassist-gpio-monitor.timer
+
+[Unit]
+Description=Timer for SmartAssist GPIO IGNITION Monitor
+Documentation=https://github.com/your-org/SmartAssist
+Requires=smartassist-gpio-export.service
+After=smartassist-gpio-export.service
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Timer]
+# Start 10 seconds after boot (give system time to settle)
+OnBootSec=10sec
+
+# Run every 5 seconds after that
+OnUnitActiveSec=5sec
+
+# Service to trigger
+Unit=smartassist-gpio-monitor.service
+
+# Timer accuracy (1 second is fine for this)
+AccuracySec=1sec
+
+# Add random delay to avoid exact timing (0-2 seconds)
+RandomizedDelaySec=2sec
+
+# Wake system from sleep if needed
+WakeSystem=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,44 @@
+# SmartAssist CAN Init Service
+# Initializes CAN bus (can0) at 250kbps for vehicle communication
+#
+# Install:
+#   sudo cp smartassist-can-init.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-can-init
+#   sudo systemctl start smartassist-can-init
+#
+# Check status:
+#   systemctl status smartassist-can-init
+#   ip link show can0  # Should show: state UP
+#   candump can0  # Should show CAN messages
+
+[Unit]
+Description=SmartAssist CAN Bus Initialization (250kbps)
+Documentation=https://github.com/your-org/SmartAssist
+After=network.target
+Before=smartassist-can-server.service smartassist-time-sync.service
+
+[Service]
+Type=oneshot
+# Execute initialization script
+ExecStart=/opt/smartassist/services/can-init/scripts/can-init.sh
+RemainAfterExit=yes
+
+# Restart policy
+Restart=on-failure
+RestartSec=5
+StartLimitBurst=5
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-can-init
+
+# Security
+PrivateTmp=no
+NoNewPrivileges=false
+# Need network admin capability for ip link commands
+AmbientCapabilities=CAP_NET_ADMIN
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,37 @@
+# SmartAssist CAN Deinit Service
+# Cleanly shuts down CAN bus on system shutdown
+#
+# Install:
+#   sudo cp smartassist-can-deinit.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-can-deinit
+#
+# Check status:
+#   systemctl status smartassist-can-deinit
+#   ip link show can0  # Should show: state DOWN (after shutdown)
+
+[Unit]
+Description=SmartAssist CAN Bus De-initialization
+Documentation=https://github.com/your-org/SmartAssist
+Before=shutdown.target reboot.target halt.target
+Conflicts=reboot.target shutdown.target halt.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+# Execute de-initialization script
+ExecStart=/opt/smartassist/services/can-init/scripts/can-deinit.sh
+RemainAfterExit=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-can-deinit
+
+# Security
+PrivateTmp=no
+NoNewPrivileges=false
+AmbientCapabilities=CAP_NET_ADMIN
+
+[Install]
+WantedBy=halt.target reboot.target shutdown.target

@@ -1,0 +1,53 @@
+# SmartAssist Time Synchronization Service
+# Synchronizes system time from GPS timestamp on CAN bus
+#
+# Install:
+#   sudo cp smartassist-time-sync.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-time-sync
+#   sudo systemctl start smartassist-time-sync
+#
+# Check status:
+#   systemctl status smartassist-time-sync
+#   journalctl -u smartassist-time-sync -f
+
+[Unit]
+Description=SmartAssist Time Synchronization from CAN GPS
+Documentation=https://github.com/your-org/SmartAssist
+After=smartassist-can-init.service network.target
+Requires=smartassist-can-init.service
+Before=smartassist-pipeline.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+# Working directory
+WorkingDirectory=/opt/smartassist/services/time-sync
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="PATH=/usr/bin:/usr/local/bin"
+
+# Execute time sync script
+ExecStart=/usr/bin/python3 /opt/smartassist/services/time-sync/src/can_time_sync.py
+
+# Restart policy
+# Retry every 5 minutes if GPS time not available
+Restart=on-failure
+RestartSec=300
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-time-sync
+
+# Security
+PrivateTmp=no
+NoNewPrivileges=false
+# Need sys_time capability to set system time
+AmbientCapabilities=CAP_SYS_TIME
+
+[Install]
+WantedBy=multi-user.target

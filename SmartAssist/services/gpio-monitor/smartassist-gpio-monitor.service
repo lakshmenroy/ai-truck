@@ -1,0 +1,53 @@
+# SmartAssist GPIO IGNITION Monitor Service
+# Monitors IGNITION GPIO signal and triggers graceful shutdown when OFF
+#
+# This service is triggered by smartassist-gpio-monitor.timer every 5 seconds
+#
+# Install:
+#   sudo cp smartassist-gpio-monitor.service /etc/systemd/system/
+#   sudo cp smartassist-gpio-monitor.timer /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-gpio-monitor.timer
+#   sudo systemctl start smartassist-gpio-monitor.timer
+#
+# Check status:
+#   systemctl status smartassist-gpio-monitor.timer
+#   journalctl -u smartassist-gpio-monitor -f
+
+[Unit]
+Description=SmartAssist GPIO IGNITION Monitor
+Documentation=https://github.com/your-org/SmartAssist
+Requires=smartassist-gpio-export.service
+After=smartassist-gpio-export.service
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Service]
+Type=simple
+# Execute monitoring script
+ExecStart=/opt/smartassist/services/gpio-monitor/src/monitor.sh
+
+# Environment
+Environment=LOCK_FILE=/run/lock/smartassist_gpio_monitor.lock
+
+# Cleanup lock file
+ExecStartPost=/bin/rm -f ${LOCK_FILE}
+ExecStop=/bin/rm -f ${LOCK_FILE}
+
+# Don't restart automatically - timer will trigger next run
+Restart=no
+RemainAfterExit=no
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-gpio-monitor
+
+# Security
+PrivateTmp=no
+NoNewPrivileges=false
+# Need sys_admin for poweroff command
+AmbientCapabilities=CAP_SYS_ADMIN
+
+[Install]
+WantedBy=multi-user.target

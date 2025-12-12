@@ -1,0 +1,55 @@
+# SmartAssist Camera Initialization Service
+# Detects and validates CSI cameras at boot, outputs status to JSON
+#
+# The actual initialization script is in tools/initialize_cameras.py
+# This service file makes it run automatically at boot
+#
+# Install:
+#   sudo cp smartassist-camera-init.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-camera-init
+#   sudo systemctl start smartassist-camera-init
+#
+# Check status:
+#   systemctl status smartassist-camera-init
+#   cat /tmp/camera_init_results_*.json
+
+[Unit]
+Description=SmartAssist Camera Initialization
+Documentation=https://github.com/your-org/SmartAssist
+After=smartassist-time-sync.service
+Wants=smartassist-time-sync.service
+Before=smartassist-pipeline.service
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+
+# Working directory
+WorkingDirectory=/opt/smartassist/tools
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="PATH=/usr/bin:/usr/local/bin"
+
+# Execute camera initialization script
+ExecStart=/usr/bin/python3 /opt/smartassist/tools/initialize_cameras.py
+RemainAfterExit=yes
+
+# Restart policy
+Restart=on-failure
+RestartSec=10
+StartLimitBurst=3
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartassist-camera-init
+
+# Security
+PrivateTmp=no
+NoNewPrivileges=false
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,33 @@
+# SmartAssist Health Monitor Timer
+# Triggers health check every 30 seconds
+#
+# Install:
+#   sudo cp smartassist-health-monitor.timer /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable smartassist-health-monitor.timer
+#   sudo systemctl start smartassist-health-monitor.timer
+#
+# Check status:
+#   systemctl status smartassist-health-monitor.timer
+#   systemctl list-timers smartassist-health-monitor.timer
+
+[Unit]
+Description=Timer for SmartAssist Health Monitor
+Documentation=https://github.com/your-org/SmartAssist
+After=multi-user.target
+
+[Timer]
+# Start 60 seconds after boot (give services time to start)
+OnBootSec=60sec
+
+# Run every 30 seconds after that
+OnUnitActiveSec=30sec
+
+# Service to trigger
+Unit=smartassist-health-monitor.service
+
+# Timer accuracy
+AccuracySec=5sec
+
+[Install]
+WantedBy=timers.target
