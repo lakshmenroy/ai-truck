@@ -34,7 +34,7 @@ import pandas as pd
 import numpy as np
 
 from pipeline.utils.paths import OUTPUT_ROOT
-
+from pipeline.utils.paths import get_dbc_path
 class CANServer:
     """
     CAN Server for managing CAN bus communication
