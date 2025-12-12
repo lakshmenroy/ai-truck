@@ -36,10 +36,10 @@ from .computation import (
 from .constants import ROAD_UNIQUE_ID, GARBAGE_UNIQUE_ID
 
 # Get paths using smart path detection
-from ...utils.paths import get_pipeline_root
+from pipeline.utils.paths import CSI_ROOT
+import os
+config_path = os.path.join(CSI_ROOT, "config", "csi_config.yaml")
 
-# Load CSI configuration
-config_path = get_pipeline_root() / "config" / "csi_config.yaml"
 with open(config_path, mode="r") as f:
     csi_config = SimpleNamespace(**yaml.safe_load(stream=f))
     csi_config.road_model = SimpleNamespace(**csi_config.road_model)
