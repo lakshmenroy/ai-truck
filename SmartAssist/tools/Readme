@@ -1,0 +1,124 @@
+# SmartAssist Tools
+
+Utility scripts for system initialization and maintenance.
+
+---
+
+## 📁 Directory Contents
+
+### **initialize_cameras.py**
+**Purpose**: Detect and validate CSI cameras at boot  
+**When**: Runs before main pipeline via `smartassist-camera-init.service`  
+**Output**: `/tmp/camera_init_results_TIMESTAMP.json`
+
+**Usage**:
+```bash
+python3 initialize_cameras.py
+```
+
+**What it does**:
+1. Detects all V4L2 camera devices
+2. Tests each camera by capturing a frame
+3. Exports status JSON
+4. Returns exit code 0 (success) or 1 (failure)
+
+---
+
+### **set_serial_number.py**
+**Purpose**: Read vehicle serial number from CAN bus and update config  
+**When**: Runs at boot before pipeline  
+**Requires**: CAN bus active (can0), DBC file
+
+**Usage**:
+```bash
+python3 set_serial_number.py
+```
+
+**What it does**:
+1. Listens to CAN message 0x205
+2. Decodes equipment number from DBC
+3. Updates `logging_config.yaml` with serial number
+4. Skips if serial already set
+
+---
+
+## 🔧 Installation
+
+Copy tools to system location:
+```bash
+sudo mkdir -p /opt/smartassist/tools
+sudo cp tools/*.py /opt/smartassist/tools/
+sudo chmod +x /opt/smartassist/tools/*.py
+```
+
+---
+
+## 🚀 Usage in Services
+
+### Camera Initialization Service
+```ini
+[Service]
+ExecStart=/usr/bin/python3 /opt/smartassist/tools/initialize_cameras.py
+```
+
+### Serial Number Collection (Optional)
+Run before pipeline if needed:
+```bash
+python3 /opt/smartassist/tools/set_serial_number.py
+```
+
+---
+
+## 📊 Output Files
+
+### Camera Initialization
+```json
+{
+  "timestamp": "2025-12-12T10:30:00",
+  "success": true,
+  "cameras_detected": 4,
+  "cameras_working": 4
+}
+```
+
+### Serial Number
+Updates `pipeline/config/logging_config.yaml`:
+```yaml
+vehicle_info:
+  - serial_number: "SN217841"
+```
+
+---
+
+## 🔍 Troubleshooting
+
+### Camera Init Fails
+1. Check camera connections
+2. Verify V4L2 devices exist: `ls /dev/video*`
+3. Test manually: `v4l2-ctl --list-devices`
+4. Check service logs: `journalctl -u smartassist-camera-init`
+
+### Serial Number Not Set
+1. Verify CAN bus active: `ip link show can0`
+2. Check DBC file exists: `ls pipeline/dbc/TMS_V1_45_20251110.dbc`
+3. Monitor CAN: `candump can0`
+4. Check for message 0x205
+
+---
+
+## 📝 Adding New Tools
+
+Create new utility scripts in this directory:
+1. Add Python script with shebang: `#!/usr/bin/env python3`
+2. Make executable: `chmod +x script.py`
+3. Document in this README
+4. Add to systemd service if needed
+
+---
+
+## 🎯 Future Tools (Planned)
+
+- `check_model_versions.py` - Verify model files and versions
+- `validate_configs.py` - Check all YAML/JSON configs
+- `system_info.py` - Collect hardware/software info
+- `diagnostic_report.py` - Generate system diagnostic report
