@@ -19,7 +19,7 @@ Requires=smartassist-camera-init.service smartassist-can-server.service
 Wants=smartassist-time-sync.service smartassist-serial-number.service
 
 [Service]
-Type=notify
+Type=simple
 User=root
 Group=root
 
@@ -38,7 +38,7 @@ ExecStart=/usr/bin/python3 -u /opt/smartassist/pipeline/src/main.py
 
 # Notify systemd when ready (requires Type=notify)
 # The pipeline should call sd_notify when fully initialized
-NotifyAccess=main
+#NotifyAccess=main
 
 # Restart policy - always restart on failure
 Restart=always
@@ -66,7 +66,7 @@ NoNewPrivileges=false
 SupplementaryGroups=video gpio
 
 # Watchdog (optional - pipeline can send keepalive)
-WatchdogSec=60s
+$WatchdogSec=60s
 
 [Install]
 WantedBy=multi-user.target

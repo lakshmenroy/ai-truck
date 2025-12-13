@@ -1,0 +1,11 @@
+[Unit]
+Description=SmartAssist Time Sync Timer (Hourly)
+After=smartassist-can-init.service
+
+[Timer]
+OnBootSec=1h
+OnUnitActiveSec=1h
+Unit=smartassist-time-sync.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,48 @@
+
+# CSI Model Documentation
+
+## Clean Street Index Calculation
+
+**Formula:**
+```
+CSI = (road_area - garbage_area) / total_area * 100
+```
+
+**Discrete Levels:**
+- A: CSI > 75 (Clean)
+- B: 50 < CSI ≤ 75 (Moderate)
+- C: 25 < CSI ≤ 50 (Dirty)
+- D: CSI ≤ 25 (Very Dirty)
+
+## Components
+
+**Road Segmentation:**
+- Model: Road segmentation network
+- Config: `deepstream_configs/road_config.txt`
+- Output: Binary mask of drivable area
+
+**Garbage Detection:**
+- Model: Garbage segmentation network
+- Config: `deepstream_configs/garbage_config.txt`
+- Output: Binary mask of litter
+
+**ROI Masking:**
+- Trapezoid mask configuration in `config/csi_config.yaml`
+- Filters irrelevant areas (sky, vehicle hood)
+
+## Configuration
+
+**File:** `config/csi_config.yaml`
+
+```yaml
+trapezoid:
+  top_width_ratio: 0.3
+  bottom_width_ratio: 1.0
+  height_ratio: 0.7
+```
+
+## Output
+
+- CSV log with CSI scores
+- Timestamps
+- Front/rear camera CSI

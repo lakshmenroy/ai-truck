@@ -19,7 +19,7 @@ Requires=smartassist-can-init.service
 Before=smartassist-pipeline.service
 
 [Service]
-Type=simple
+Type=oneshot
 User=root
 Group=root
 
