@@ -263,7 +263,24 @@ software:
   deepstream: "6.4+"
   python: "3.8+"
 ```
+Compatibility matrix can look like this.
+```yaml
+pipeline:
+  version: "1.6.0"
+  requires:
+    csi_model: ">=2.0.0,<3.0.0"  # Requires CSI 2.0+!
+    nozzlenet_model: ">=2.6.0"   # OK
 
+nozzlenet_model:
+  version: "2.6.0"
+  requires:
+    pipeline: ">=1.6.0"  # ✓ OK
+
+csi_model:
+  version: "1.0.0"  # PROBLEM!
+  requires:
+    pipeline: ">=1.0.0,<1.5.0"  # Incompatible with pipeline 1.6.0!
+```
 ### SBOM.json (Generated Output)
 
 **Location:** Generated during CI, attached to GitHub Releases
